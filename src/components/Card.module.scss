@@ -1,12 +1,11 @@
 @import "breakpoints";
+@import "colors";
 
 .base {
   background-color: white;
-  padding: 24px;
   border-radius: 8px;
   width: 700px;
-  min-height: 500px;
-  border: 1px solid #f5f4f7;
+  border: 1px solid $border-light;
   box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.03);
 
   @media screen and (max-width: $screen-md) {
