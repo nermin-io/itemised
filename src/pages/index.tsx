@@ -1,3 +1,4 @@
+import Button from "@/components/Button";
 import Card from "@/components/Card";
 import CardBody from "@/components/CardBody";
 import CardHeader from "@/components/CardHeader";
@@ -7,7 +8,7 @@ export default function Home() {
     <Card>
       <CardHeader>
         My List
-        <button>Add Task</button>
+        <Button>Add Task</Button>
       </CardHeader>
       <CardBody>Hello World</CardBody>
     </Card>
