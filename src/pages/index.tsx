@@ -43,7 +43,7 @@ export default function Home() {
   return (
     <Card>
       <CardHeader>
-        My List
+        <p>My List</p>
         <Button>Add Task</Button>
       </CardHeader>
       <CardBody>
