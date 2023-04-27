@@ -8,23 +8,23 @@
   gap: 12px;
 
   &:not(:last-child) {
-    border-bottom: 1px dashed $border-dark;
+    border-bottom: 1px dashed $gray6;
   }
 
   div {
     display: flex;
     flex-direction: column;
     gap: 2px;
-    font-size: 16px;
+    font-size: 15px;
 
     p:first-child {
       font-weight: 500;
-      color: $brand-dark;
+      color: $gray12;
     }
 
     p:last-child {
       font-weight: 400;
-      color: $brand-subtext;
+      color: $gray9;
     }
   }
 }

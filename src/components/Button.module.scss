@@ -9,22 +9,14 @@
 }
 
 .primary {
-  background-color: $brand-dark;
+  background-color: $gray12;
   color: white;
-
-  &:hover {
-    background-color: $brand-dark-lighter;
-  }
 }
 
 .secondary {
   background-color: white;
-  border: 1px solid $brand-light-lighter;
-  color: $brand-light;
-
-  &:hover {
-    background-color: $brand-lightest;
-  }
+  border: 1px solid $gray7;
+  color: $gray11;
 }
 
 .small {
