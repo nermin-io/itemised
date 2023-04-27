@@ -4,8 +4,7 @@
   padding: 24px;
   display: flex;
   flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
+  align-items: flex-start;
   gap: 12px;
 
   &:not(:last-child) {

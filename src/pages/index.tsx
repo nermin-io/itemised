@@ -3,6 +3,7 @@ import Card from "@/components/Card";
 import CardBody from "@/components/CardBody";
 import CardHeader from "@/components/CardHeader";
 import CardRow from "@/components/CardRow";
+import Checkbox from "@/components/Checkbox";
 
 const exampleTasks = [
   {
@@ -49,7 +50,7 @@ export default function Home() {
       <CardBody>
         {exampleTasks.map((task, idx) => (
           <CardRow key={idx}>
-            <input type="radio" />
+            <Checkbox />
             <div>
               <p>{task.title}</p>
               <p>{task.description}</p>

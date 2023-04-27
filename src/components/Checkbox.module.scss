@@ -1,0 +1,24 @@
+@import "colors";
+
+.base {
+  background-color: white;
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid $gray7;
+  margin-top: 3px;
+  &:hover {
+    background-color: $gray3;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 2px black;
+  }
+}
+
+.indicator {
+  margin-top: 4px;
+}
