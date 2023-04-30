@@ -12,7 +12,7 @@ export interface TodoContext {
   todos: Array<TodoItem>;
   clear: () => void;
   addItem: (item: TodoItem) => void;
-  updateItem: (key: string, item: TodoItem) => void;
+  updateItem: (key: string, item: Omit<TodoItem, "key">) => void;
   completeItem: (key: string) => void;
   removeItem: (key: string) => void;
 }

@@ -56,14 +56,17 @@ const TodoProvider: React.FC<Props> = ({ children }) => {
     setTodos(filteredTodos);
   };
 
-  const updateItem = (key: string, item: TodoItem) => {
-    const newTodos = todos.map((t) => {
-      if (t.key === key) {
-        return item;
+  const updateItem = (key: string, newItem: Omit<TodoItem, "key">) => {
+    const newTodos = todos.map((todo) => {
+      if (todo.key === key) {
+        return {
+          key: key,
+          ...newItem,
+        };
       }
 
-      return item;
-    });
+      return todo;
+    }) as TodoItem[];
 
     setTodos(newTodos);
   };
