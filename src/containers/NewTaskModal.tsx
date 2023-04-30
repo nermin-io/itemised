@@ -1,25 +1,34 @@
 import React, { useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
-import Button from "@/components/Button";
-import DialogOverlay from "@/components/DialogOverlay";
-import DialogContent from "@/components/DialogContent";
+import Button, { TriggerButton } from "@/components/Button";
 import DialogFooter from "@/components/DialogFooter";
 import Input from "@/components/Input";
 import Textarea from "@/components/Textarea";
+import styles from "./NewTaskModal.module.scss";
 
 interface Props {}
 
 const NewTaskModal: React.FC<Props> = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+
+  const onCancelHandler = () => {
+    setTitle("");
+    setDescription("");
+  };
+
+  const onSaveHandler = () => {
+    console.log("Saved");
+  };
+
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
-        <Button>Add Task</Button>
+        <TriggerButton>Add Task</TriggerButton>
       </Dialog.Trigger>
       <Dialog.Portal>
-        <DialogOverlay />
-        <DialogContent>
+        <Dialog.Overlay className={styles.DialogOverlay} />
+        <Dialog.Content className={styles.DialogContent}>
           <Input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -36,15 +45,21 @@ const NewTaskModal: React.FC<Props> = () => {
           />
           <DialogFooter>
             <Dialog.Close asChild>
-              <Button size="small" intent="secondary">
-                Close
-              </Button>
+              <TriggerButton
+                size="small"
+                intent="secondary"
+                onClick={onCancelHandler}
+              >
+                Cancel
+              </TriggerButton>
             </Dialog.Close>
             <Dialog.Close asChild>
-              <Button size="small">Add Task</Button>
+              <TriggerButton size="small" onClick={onSaveHandler}>
+                Add Task
+              </TriggerButton>
             </Dialog.Close>
           </DialogFooter>
-        </DialogContent>
+        </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
   );

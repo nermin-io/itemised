@@ -24,6 +24,7 @@ interface Props
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof button> {
   children: React.ReactNode | React.ReactNode[];
+  innerRef?: React.ForwardedRef<HTMLButtonElement>;
 }
 
 const Button: React.FC<Props> = ({
@@ -31,13 +32,26 @@ const Button: React.FC<Props> = ({
   className,
   intent,
   size,
+  innerRef,
   ...props
 }) => {
   return (
-    <button className={button({ intent, size, className })} {...props}>
+    <button
+      ref={innerRef}
+      className={button({ intent, size, className })}
+      {...props}
+    >
       {children}
     </button>
   );
 };
+
+export const TriggerButton = React.forwardRef<HTMLButtonElement, Props>(
+  ({ innerRef, ...props }, ref) => (
+    <Button innerRef={ref} {...props}>
+      {props.children}
+    </Button>
+  )
+);
 
 export default Button;
