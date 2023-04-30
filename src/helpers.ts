@@ -1,5 +1,12 @@
 import { TodoItem } from "./context/todo";
-import { format, parse, isAfter, isBefore, isSameDay } from "date-fns";
+import {
+  format,
+  parse,
+  isAfter,
+  isBefore,
+  isSameDay,
+  differenceInCalendarDays,
+} from "date-fns";
 import { groupBy } from "lodash";
 
 const sortTodos = (a: TodoItem, b: TodoItem) => {
@@ -13,14 +20,30 @@ export const groupItemsByDate = (items: Array<TodoItem>) => {
   return groupBy(sorted, (item) => format(item.date, "LLL d"));
 };
 
-export const getUrgency = (dateStr: string) => {
+export const triage = (date: Date) => {
   const currentDate = new Date();
-  const date = parse(dateStr, "LLL d", currentDate);
   if (isSameDay(currentDate, date)) {
     return "medium";
   } else if (isAfter(currentDate, date)) {
     return "high";
   } else {
     return "low";
+  }
+};
+
+export const getDueDays = (date: Date) => {
+  const currentDate = new Date();
+  const dueDays = differenceInCalendarDays(date, currentDate);
+
+  if (dueDays === -1) {
+    return "Due Yesterday";
+  } else if (dueDays === 1) {
+    return "Due Tomorrow";
+  } else if (dueDays < 0) {
+    return `Due ${Math.abs(dueDays)} dasy ago`;
+  } else if (dueDays > 0) {
+    return `Due in ${dueDays} days`;
+  } else {
+    return "Due Today";
   }
 };
