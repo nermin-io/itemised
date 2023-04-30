@@ -13,10 +13,15 @@ const input = cva(styles.base, {
       regular: styles.regular,
       text: styles.text,
     },
+    intent: {
+      primary: styles.primary,
+      secondary: styles.secondary,
+    },
   },
   defaultVariants: {
     size: "medium",
     variant: "regular",
+    intent: "secondary",
   },
 });
 
@@ -24,8 +29,16 @@ type InputAttr = Omit<React.InputHTMLAttributes<HTMLInputElement>, "size">;
 
 interface Props extends InputAttr, VariantProps<typeof input> {}
 
-const Input: React.FC<Props> = ({ variant, size, className, ...props }) => {
-  return <input className={input({ variant, size, className })} {...props} />;
+const Input: React.FC<Props> = ({
+  intent,
+  variant,
+  size,
+  className,
+  ...props
+}) => {
+  return (
+    <input className={input({ intent, variant, size, className })} {...props} />
+  );
 };
 
 export default Input;

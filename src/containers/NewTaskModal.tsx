@@ -25,6 +25,7 @@ const NewTaskModal: React.FC<Props> = () => {
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Todo Item"
             variant="text"
+            intent="primary"
           />
           <Textarea
             value={description}
