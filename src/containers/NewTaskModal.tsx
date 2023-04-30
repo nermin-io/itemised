@@ -21,9 +21,13 @@ const NewTaskModal: React.FC<Props> = () => {
     else setIsDisabled(true);
   }, [title]);
 
-  const onCancelHandler = () => {
+  const clearFields = () => {
     setTitle("");
     setDescription("");
+  };
+
+  const onCancelHandler = () => {
+    clearFields();
   };
 
   const onSaveHandler = () => {
@@ -34,6 +38,7 @@ const NewTaskModal: React.FC<Props> = () => {
       completed: false,
       date: new Date(),
     });
+    clearFields();
   };
 
   return (

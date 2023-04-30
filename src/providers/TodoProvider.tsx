@@ -68,12 +68,28 @@ const TodoProvider: React.FC<Props> = ({ children }) => {
     setTodos(newTodos);
   };
 
+  const completeItem = (key: string) => {
+    const newTodos = todos.map((item) => {
+      if (item.key === key) {
+        return {
+          ...item,
+          completed: true,
+        };
+      }
+
+      return item;
+    });
+
+    setTodos(newTodos);
+  };
+
   const context = {
     todos,
     clear,
     addItem,
     removeItem,
     updateItem,
+    completeItem,
   };
 
   return (

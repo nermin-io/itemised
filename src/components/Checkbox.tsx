@@ -8,13 +8,15 @@ const checkbox = cva(styles.base, {
   variants: {},
 });
 
-interface Props extends VariantProps<typeof checkbox> {
+interface Props
+  extends RadixCheckbox.CheckboxProps,
+    VariantProps<typeof checkbox> {
   className?: string;
 }
 
-const Checkbox: React.FC<Props> = ({ className }) => {
+const Checkbox: React.FC<Props> = ({ className, ...props }) => {
   return (
-    <RadixCheckbox.Root className={checkbox({ className })}>
+    <RadixCheckbox.Root className={checkbox({ className })} {...props}>
       <RadixCheckbox.Indicator className={styles.indicator}>
         <CheckIcon height={18} width={18} />
       </RadixCheckbox.Indicator>

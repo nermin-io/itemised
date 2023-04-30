@@ -13,6 +13,7 @@ export interface TodoContext {
   clear: () => void;
   addItem: (item: TodoItem) => void;
   updateItem: (key: string, item: TodoItem) => void;
+  completeItem: (key: string) => void;
   removeItem: (key: string) => void;
 }
 
@@ -22,6 +23,7 @@ const INITIAL_CONTEXT: TodoContext = {
   addItem: () => {},
   removeItem: () => {},
   updateItem: () => {},
+  completeItem: () => {},
 };
 
 const TodoContext = React.createContext<TodoContext>(INITIAL_CONTEXT);

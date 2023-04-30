@@ -5,12 +5,13 @@ import Checkbox from "@/components/Checkbox";
 import useTodos from "@/hooks/todo";
 import React from "react";
 import NewTaskModal from "./NewTaskModal";
+import TodoItem from "./TodoItem";
 
 interface Props {}
 
 const TodoList: React.FC<Props> = () => {
   const { todos } = useTodos();
-  console.log("todos", todos);
+  const outstandingTodos = todos.filter((t) => !t.completed);
 
   return (
     <>
@@ -19,14 +20,8 @@ const TodoList: React.FC<Props> = () => {
         <NewTaskModal />
       </CardHeader>
       <CardBody>
-        {todos.map((todo) => (
-          <CardRow key={todo.key}>
-            <Checkbox />
-            <div>
-              <p>{todo.title}</p>
-              <p>{todo.description}</p>
-            </div>
-          </CardRow>
+        {outstandingTodos.map((todo) => (
+          <TodoItem key={todo.key} item={todo} />
         ))}
       </CardBody>
     </>
