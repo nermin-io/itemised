@@ -1,10 +1,10 @@
-import Button from "@/components/Button";
 import CardBody from "@/components/CardBody";
 import CardHeader from "@/components/CardHeader";
 import CardRow from "@/components/CardRow";
 import Checkbox from "@/components/Checkbox";
 import useTodos from "@/hooks/todo";
 import React from "react";
+import NewTaskModal from "./NewTaskModal";
 
 interface Props {}
 
@@ -16,7 +16,7 @@ const TodoList: React.FC<Props> = () => {
     <>
       <CardHeader>
         <p>My List</p>
-        <Button>Add Task</Button>
+        <NewTaskModal />
       </CardHeader>
       <CardBody>
         {todos.map((todo) => (
