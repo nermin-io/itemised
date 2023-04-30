@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import Button from "@/components/Button";
 import DialogOverlay from "@/components/DialogOverlay";
 import DialogContent from "@/components/DialogContent";
 import DialogFooter from "@/components/DialogFooter";
+import Input from "@/components/Input";
+import Textarea from "@/components/Textarea";
 
 interface Props {}
 
 const NewTaskModal: React.FC<Props> = () => {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
@@ -16,12 +20,27 @@ const NewTaskModal: React.FC<Props> = () => {
       <Dialog.Portal>
         <DialogOverlay />
         <DialogContent>
+          <Input
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Todo Item"
+            variant="text"
+          />
+          <Textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Description..."
+            size="small"
+            variant="text"
+          />
           <DialogFooter>
             <Dialog.Close asChild>
-              <Button intent="secondary">Close</Button>
+              <Button size="small" intent="secondary">
+                Close
+              </Button>
             </Dialog.Close>
             <Dialog.Close asChild>
-              <Button>Add Task</Button>
+              <Button size="small">Add Task</Button>
             </Dialog.Close>
           </DialogFooter>
         </DialogContent>

@@ -4,7 +4,7 @@
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
+  box-sizing: inherit;
   padding: 0;
   margin: 0;
 }
@@ -14,6 +14,7 @@ body {
   max-width: 100vw;
   overflow-x: hidden;
   font-family: $inter;
+  box-sizing: border-box;
 }
 
 body {
@@ -30,6 +31,9 @@ a {
 
 button,
 fieldset,
+textarea,
 input {
   all: unset;
+  box-sizing: inherit;
+  font-family: inherit;
 }
