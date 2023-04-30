@@ -40,7 +40,7 @@ export const getDueDays = (date: Date) => {
   } else if (dueDays === 1) {
     return "Due Tomorrow";
   } else if (dueDays < 0) {
-    return `Due ${Math.abs(dueDays)} dasy ago`;
+    return `Due ${Math.abs(dueDays)} days ago`;
   } else if (dueDays > 0) {
     return `Due in ${dueDays} days`;
   } else {
