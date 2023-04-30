@@ -11,12 +11,23 @@
 .primary {
   background-color: $gray12;
   color: white;
+
+  &:disabled {
+    cursor: not-allowed;
+    background-color: $gray10;
+    color: $gray1;
+  }
 }
 
 .secondary {
   background-color: white;
   border: 1px solid $gray7;
   color: $gray11;
+
+  &:disabled {
+    cursor: not-allowed;
+    background-color: $gray7;
+  }
 }
 
 .small {

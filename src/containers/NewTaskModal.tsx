@@ -1,16 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
-import Button, { TriggerButton } from "@/components/Button";
+import { TriggerButton } from "@/components/Button";
 import DialogFooter from "@/components/DialogFooter";
 import Input from "@/components/Input";
 import Textarea from "@/components/Textarea";
 import styles from "./NewTaskModal.module.scss";
+import useTodos from "@/hooks/todo";
+import { v4 as uuidv4 } from "uuid";
 
 interface Props {}
 
 const NewTaskModal: React.FC<Props> = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [isDisabled, setIsDisabled] = useState(true);
+  const { addItem } = useTodos();
+
+  useEffect(() => {
+    if (title.length > 0) setIsDisabled(false);
+    else setIsDisabled(true);
+  }, [title]);
 
   const onCancelHandler = () => {
     setTitle("");
@@ -18,7 +27,13 @@ const NewTaskModal: React.FC<Props> = () => {
   };
 
   const onSaveHandler = () => {
-    console.log("Saved");
+    addItem({
+      key: uuidv4(),
+      title: title,
+      description: description,
+      completed: false,
+      date: new Date(),
+    });
   };
 
   return (
@@ -54,7 +69,11 @@ const NewTaskModal: React.FC<Props> = () => {
               </TriggerButton>
             </Dialog.Close>
             <Dialog.Close asChild>
-              <TriggerButton size="small" onClick={onSaveHandler}>
+              <TriggerButton
+                size="small"
+                onClick={onSaveHandler}
+                disabled={isDisabled}
+              >
                 Add Task
               </TriggerButton>
             </Dialog.Close>
