@@ -10,13 +10,13 @@ const input = cva(styles.base, {
       large: styles.large,
     },
     variant: {
-      input: styles.input,
+      regular: styles.regular,
       text: styles.text,
     },
   },
   defaultVariants: {
     size: "medium",
-    variant: "input",
+    variant: "regular",
   },
 });
 
