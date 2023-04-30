@@ -9,6 +9,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+  &:focus {
+    outline: 2px solid black;
+    outline-offset: 2px;
+  }
 }
 
 .primary {

@@ -6,7 +6,6 @@ import Input from "@/components/Input";
 import Textarea from "@/components/Textarea";
 import styles from "./TaskModal.module.scss";
 import useTodos from "@/hooks/todo";
-import { v4 as uuidv4 } from "uuid";
 import { TodoItem } from "@/context/todo";
 
 interface Props {
@@ -33,13 +32,18 @@ const TaskModal: React.FC<Props> = ({ item }) => {
     });
   };
 
+  const onCancelHandler = () => {
+    setTitle(item.title);
+    setDescription(item.description);
+  };
+
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
-        <div className={styles.Trigger}>
+        <a className={styles.Trigger} role="expandable">
           <p>{item.title}</p>
           <p>{item.description}</p>
-        </div>
+        </a>
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className={styles.DialogOverlay} />
@@ -60,7 +64,11 @@ const TaskModal: React.FC<Props> = ({ item }) => {
           />
           <DialogFooter>
             <Dialog.Close asChild>
-              <TriggerButton size="small" intent="secondary">
+              <TriggerButton
+                size="small"
+                intent="secondary"
+                onClick={onCancelHandler}
+              >
                 Cancel
               </TriggerButton>
             </Dialog.Close>
