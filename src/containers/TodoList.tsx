@@ -4,8 +4,9 @@ import useTodos from "@/hooks/todo";
 import React from "react";
 import NewTaskModal from "./NewTaskModal";
 import TodoItem from "./TodoItem";
-import { groupItemsByDate } from "@/helpers";
+import { groupItemsByDate, getUrgency } from "@/helpers";
 import CardRowGroup from "@/components/CardRowGroup";
+import { isBefore } from "date-fns";
 
 interface Props {}
 
@@ -22,14 +23,17 @@ const TodoList: React.FC<Props> = () => {
         <NewTaskModal />
       </CardHeader>
       <CardBody>
-        {Object.keys(groups).map((date) => (
-          <CardRowGroup key={date}>
-            <p>{date}</p>
-            {groups[date].map((item) => (
-              <TodoItem key={item.key} item={item} />
-            ))}
-          </CardRowGroup>
-        ))}
+        {Object.keys(groups).map((dateStr) => {
+          const urgency = getUrgency(dateStr);
+          return (
+            <CardRowGroup key={dateStr} urgency={urgency}>
+              <p>{dateStr}</p>
+              {groups[dateStr].map((item) => (
+                <TodoItem key={item.key} item={item} />
+              ))}
+            </CardRowGroup>
+          );
+        })}
       </CardBody>
     </>
   );
