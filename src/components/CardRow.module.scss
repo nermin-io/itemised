@@ -3,12 +3,19 @@
 .base {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
-  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
   border-bottom: 1px dashed $gray6;
   padding: 12px 0;
 
   div {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  a {
     display: flex;
     flex-direction: column;
     gap: 2px;
