@@ -1,0 +1,30 @@
+@import "colors";
+
+.base {
+  padding: 12px 24px;
+
+  > p {
+    font-size: 15px;
+    font-weight: 500;
+    border-bottom: 1px dashed $gray6;
+    padding-bottom: 12px;
+  }
+}
+
+.highUrgency {
+  > p {
+    color: $red9;
+  }
+}
+
+.mediumUrgency {
+  > p {
+    color: $blackA12;
+  }
+}
+
+.lowUrgency {
+  > p {
+    color: $green9;
+  }
+}

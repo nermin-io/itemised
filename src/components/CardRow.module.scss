@@ -1,15 +1,12 @@
 @import "colors";
 
 .base {
-  padding: 24px;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   gap: 12px;
-
-  &:not(:last-child) {
-    border-bottom: 1px dashed $gray6;
-  }
+  border-bottom: 1px dashed $gray6;
+  padding: 12px 0;
 
   div {
     display: flex;
