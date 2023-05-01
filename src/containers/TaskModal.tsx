@@ -7,6 +7,7 @@ import Textarea from "@/components/Textarea";
 import styles from "./TaskModal.module.scss";
 import useTodos from "@/hooks/todo";
 import { TodoItem } from "@/context/todo";
+import { truncate } from "lodash";
 
 interface Props {
   item: TodoItem;
@@ -42,7 +43,7 @@ const TaskModal: React.FC<Props> = ({ item }) => {
       <Dialog.Trigger asChild>
         <a className={styles.Trigger} role="expandable">
           <p>{item.title}</p>
-          <p>{item.description}</p>
+          <p>{truncate(item.description, { length: 50 })}</p>
         </a>
       </Dialog.Trigger>
       <Dialog.Portal>
