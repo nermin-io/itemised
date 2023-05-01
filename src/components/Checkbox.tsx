@@ -1,8 +1,8 @@
 import React from "react";
 import * as RadixCheckbox from "@radix-ui/react-checkbox";
-import { CheckIcon } from "@radix-ui/react-icons";
 import { cva, type VariantProps } from "class-variance-authority";
 import styles from "./Checkbox.module.scss";
+import CheckIcon from "./icons/CheckIcon";
 
 const checkbox = cva(styles.base, {
   variants: {},
@@ -18,7 +18,7 @@ const Checkbox: React.FC<Props> = ({ className, ...props }) => {
   return (
     <RadixCheckbox.Root className={checkbox({ className })} {...props}>
       <RadixCheckbox.Indicator className={styles.indicator}>
-        <CheckIcon height={18} width={18} />
+        <CheckIcon />
       </RadixCheckbox.Indicator>
     </RadixCheckbox.Root>
   );
