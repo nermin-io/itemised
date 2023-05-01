@@ -1,7 +1,7 @@
 import CardBody from "@/components/CardBody";
 import CardHeader from "@/components/CardHeader";
 import useTodos from "@/hooks/todo";
-import React, { useState } from "react";
+import React from "react";
 import NewTaskModal from "./NewTaskModal";
 import TodoItem from "./TodoItem";
 import { getDueDays, groupItemsByDate, triage } from "@/helpers";

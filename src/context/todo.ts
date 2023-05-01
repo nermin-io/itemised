@@ -16,7 +16,7 @@ export interface TodoContext {
   removeItem: (key: string) => void;
 }
 
-const INITIAL_CONTEXT: TodoContext = {
+const defaultContextVal: TodoContext = {
   todos: [],
   clear: () => {},
   addItem: () => {},
@@ -24,6 +24,6 @@ const INITIAL_CONTEXT: TodoContext = {
   updateItem: () => {},
 };
 
-const TodoContext = React.createContext<TodoContext>(INITIAL_CONTEXT);
+const TodoContext = React.createContext<TodoContext>(defaultContextVal);
 
 export default TodoContext;
