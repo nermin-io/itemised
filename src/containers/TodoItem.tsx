@@ -32,7 +32,7 @@ const TodoItem: React.FC<Props> = ({ item }) => {
       <Checkbox checked={item.completed} onCheckedChange={handleCompleteItem} />
       <TaskModal item={item} />
       <Button size="small" intent="media" onClick={handleDeleteItem}>
-        <TrashIcon />
+        <TrashIcon color="#AAA" />
       </Button>
     </CardRow>
   );
