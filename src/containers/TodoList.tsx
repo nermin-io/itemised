@@ -1,18 +1,23 @@
 import CardBody from "@/components/CardBody";
 import CardHeader from "@/components/CardHeader";
 import useTodos from "@/hooks/todo";
-import React from "react";
+import React, { useState } from "react";
 import NewTaskModal from "./NewTaskModal";
 import TodoItem from "./TodoItem";
 import { getDueDays, groupItemsByDate, triage } from "@/helpers";
 import CardRowGroup from "@/components/CardRowGroup";
 import { parse } from "date-fns";
+import Switch from "@/components/Switch";
+import CardSettings from "@/components/CardSettings";
+import Field from "@/components/Field";
+import Label from "@/components/Label";
 
 interface Props {}
 
 const TodoList: React.FC<Props> = () => {
   const { todos } = useTodos();
-  const outstandingTodos = todos.filter((t) => !t.completed);
+  const [showCompleted, setShowCompleted] = useState(false);
+  const outstandingTodos = todos.filter((t) => showCompleted || !t.completed);
 
   const groups = groupItemsByDate(outstandingTodos);
 
@@ -23,6 +28,15 @@ const TodoList: React.FC<Props> = () => {
         <NewTaskModal />
       </CardHeader>
       <CardBody>
+        <CardSettings>
+          <Field>
+            <Switch
+              checked={showCompleted}
+              onCheckedChange={(checked) => setShowCompleted(checked)}
+            />
+            <Label>Show Completed</Label>
+          </Field>
+        </CardSettings>
         {Object.keys(groups).map((dateStr) => {
           const date = parse(dateStr, "LLL d", new Date());
           const urgency = triage(date);

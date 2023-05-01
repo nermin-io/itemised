@@ -42,7 +42,15 @@ const TaskModal: React.FC<Props> = ({ item }) => {
     <Dialog.Root>
       <Dialog.Trigger asChild>
         <a className={styles.Trigger} role="expandable">
-          <p>{item.title}</p>
+          <p
+            style={
+              item.completed
+                ? { textDecoration: "line-through", color: "#777" }
+                : {}
+            }
+          >
+            {item.title}
+          </p>
           <p>{truncate(item.description, { length: 50 })}</p>
         </a>
       </Dialog.Trigger>

@@ -1,0 +1,14 @@
+.base {
+  display: flex;
+  gap: 15px;
+}
+
+.row {
+  flex-direction: row;
+  align-items: center;
+}
+
+.column {
+  flex-direction: column;
+  align-items: flex-start;
+}

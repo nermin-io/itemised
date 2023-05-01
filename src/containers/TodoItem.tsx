@@ -12,10 +12,15 @@ interface Props {
 }
 
 const TodoItem: React.FC<Props> = ({ item }) => {
-  const { completeItem, removeItem } = useTodos();
+  const { updateItem, removeItem } = useTodos();
 
   const handleCompleteItem = () => {
-    completeItem(item.key);
+    updateItem(item.key, {
+      title: item.title,
+      description: item.description,
+      date: item.date,
+      completed: !item.completed,
+    });
   };
 
   const handleDeleteItem = () => {
