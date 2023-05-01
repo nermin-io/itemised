@@ -11,13 +11,16 @@ import Switch from "@/components/Switch";
 import CardSettings from "@/components/CardSettings";
 import Field from "@/components/Field";
 import Label from "@/components/Label";
+import useSettings from "@/hooks/settings";
 
 interface Props {}
 
 const TodoList: React.FC<Props> = () => {
   const { todos } = useTodos();
-  const [showCompleted, setShowCompleted] = useState(false);
-  const outstandingTodos = todos.filter((t) => showCompleted || !t.completed);
+  const { settings, setSetting } = useSettings();
+  const outstandingTodos = todos.filter(
+    (t) => settings.showCompleted || !t.completed
+  );
 
   const groups = groupItemsByDate(outstandingTodos);
 
@@ -31,8 +34,10 @@ const TodoList: React.FC<Props> = () => {
         <CardSettings>
           <Field>
             <Switch
-              checked={showCompleted}
-              onCheckedChange={(checked) => setShowCompleted(checked)}
+              checked={settings.showCompleted}
+              onCheckedChange={(checked) =>
+                setSetting("showCompleted", checked)
+              }
             />
             <Label>Show Completed</Label>
           </Field>
