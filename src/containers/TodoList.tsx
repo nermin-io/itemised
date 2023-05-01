@@ -38,8 +38,9 @@ const TodoList: React.FC<Props> = () => {
               onCheckedChange={(checked) =>
                 setSetting("showCompleted", checked)
               }
+              id="show-completed"
             />
-            <Label>Show Completed</Label>
+            <Label htmlFor="show-completed">Show Completed</Label>
           </Field>
         </CardSettings>
         {Object.keys(groups).map((dateStr) => {
