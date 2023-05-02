@@ -30,7 +30,7 @@ interface Props extends TextareaAttr, VariantProps<typeof textarea> {}
 const Textarea: React.FC<Props> = ({
   size,
   variant,
-  rows = 4,
+  rows = 15,
   className,
   ...props
 }) => {
