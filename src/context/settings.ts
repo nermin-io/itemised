@@ -4,6 +4,7 @@ const voidFn = () => {};
 
 export interface Settings {
   showCompleted: boolean;
+  newUser: boolean;
 }
 
 export interface SettingsContext {
@@ -13,6 +14,7 @@ export interface SettingsContext {
 
 export const defaultSettings: Settings = {
   showCompleted: false,
+  newUser: true,
 };
 
 const defaultContextVal: SettingsContext = {

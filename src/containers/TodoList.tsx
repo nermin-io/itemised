@@ -12,6 +12,7 @@ import CardSettings from "@/components/CardSettings";
 import Field from "@/components/Field";
 import Label from "@/components/Label";
 import useSettings from "@/hooks/settings";
+import EmptyState from "@/components/EmptyState";
 
 interface Props {}
 
@@ -43,6 +44,9 @@ const TodoList: React.FC<Props> = () => {
             <Label htmlFor="show-completed">Show Completed</Label>
           </Field>
         </CardSettings>
+        {outstandingTodos.length === 0 && (
+          <EmptyState newUser={settings.newUser} />
+        )}
         {Object.keys(groups).map((dateStr) => {
           const date = parse(dateStr, "LLL d", new Date());
           const urgency = triage(date);

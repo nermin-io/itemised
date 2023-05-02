@@ -7,14 +7,18 @@ import Textarea from "@/components/Textarea";
 import styles from "./NewTaskModal.module.scss";
 import useTodos from "@/hooks/todo";
 import { v4 as uuidv4 } from "uuid";
+import useSettings from "@/hooks/settings";
 
-interface Props {}
+interface Props {
+  label?: string;
+}
 
-const NewTaskModal: React.FC<Props> = () => {
+const NewTaskModal: React.FC<Props> = ({ label = "Add Task" }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [isDisabled, setIsDisabled] = useState(true);
   const { addItem } = useTodos();
+  const { settings, setSetting } = useSettings();
 
   useEffect(() => {
     if (title.length > 0) setIsDisabled(false);
@@ -31,6 +35,7 @@ const NewTaskModal: React.FC<Props> = () => {
   };
 
   const onSaveHandler = () => {
+    if (settings.newUser) setSetting("newUser", false);
     addItem({
       key: uuidv4(),
       title: title,
@@ -44,7 +49,7 @@ const NewTaskModal: React.FC<Props> = () => {
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
-        <TriggerButton>Add Task</TriggerButton>
+        <TriggerButton>{label}</TriggerButton>
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className={styles.DialogOverlay} />
