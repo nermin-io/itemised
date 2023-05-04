@@ -1,0 +1,82 @@
+@import "colors";
+
+.CalendarGrid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  margin-top: 8px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.CalendarGridHeader {
+  margin-top: 40px;
+  font-size: 12px;
+  text-align: center;
+  display: grid;
+  line-height: 24px;
+  color: $gray10;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.SrHelper {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.CalendarControls {
+  display: flex;
+  align-items: center;
+}
+
+.CalendarControlsButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  margin: -6px 0;
+  padding: 6px;
+  color: #9ca3af;
+
+  &:hover {
+    color: #6b7280;
+  }
+}
+
+.Month {
+  flex: 1 1 auto;
+  color: $gray12;
+  font-weight: 500;
+}
+
+.CalendarCell {
+  padding: 6px 0;
+}
+
+.CalendarCellButton {
+  margin: 0 auto;
+  height: 32px;
+  width: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+}
+
+.Selected {
+  background-color: $red11;
+  color: white;
+  font-weight: 500;
+}
+
+.Today {
+  background-color: $gray3;
+  color: $gray12;
+  font-weight: 500;
+}

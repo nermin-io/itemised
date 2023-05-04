@@ -1,6 +1,10 @@
 @import "colors";
 
 .CardSettings {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   background-color: $gray3;
   border-bottom: 1px solid $gray5;
   padding: 12px 24px;
