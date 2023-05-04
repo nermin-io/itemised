@@ -3,7 +3,14 @@ import Card from "@/components/Card";
 
 export default function CalendarDemo() {
   return (
-    <Card>
+    <Card
+      style={{
+        padding: 10,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       <Calendar />
     </Card>
   );

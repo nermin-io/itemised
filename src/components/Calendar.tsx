@@ -2,25 +2,20 @@ import {
   add,
   eachDayOfInterval,
   endOfMonth,
+  endOfWeek,
   format,
-  formatISO,
-  getDay,
   isEqual,
+  isSameMonth,
   isToday,
   parse,
   startOfToday,
+  startOfWeek,
 } from "date-fns";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Calendar.module.scss";
+import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 
 interface Props {}
-
-const columnStart = (day: Date, dayIndex: number) => {
-  if (dayIndex !== 0) return {};
-  return {
-    gridColumnStart: getDay(day) + 1,
-  };
-};
 
 function classNames(...classes: Array<string | boolean>) {
   return classes.filter(Boolean).join(" ");
@@ -30,46 +25,48 @@ const Calendar: React.FC<Props> = () => {
   const today = startOfToday();
   const [selectedDay, setSelectedDay] = useState(today);
   const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
-  const firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
+  const monthStart = parse(currentMonth, "MMM-yyyy", new Date());
 
-  console.log("selectedDay", selectedDay);
+  useEffect(() => {
+    if (!isSameMonth(selectedDay, monthStart))
+      setCurrentMonth(format(selectedDay, "MMM-yyyy"));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedDay]);
 
   const days = eachDayOfInterval({
-    start: firstDayCurrentMonth,
-    end: endOfMonth(firstDayCurrentMonth),
+    start: startOfWeek(monthStart),
+    end: endOfWeek(endOfMonth(monthStart)),
   });
 
-  function previousMonth() {
-    const firstDayNextMonth = add(firstDayCurrentMonth, { months: -1 });
-    setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
-  }
+  const previousMonth = () => {
+    const firstOfPreviousMonth = add(monthStart, { months: -1 });
+    setCurrentMonth(format(firstOfPreviousMonth, "MMM-yyyy"));
+  };
 
-  function nextMonth() {
-    const firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 });
-    setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
-  }
+  const nextMonth = () => {
+    const firstOfNextMonth = add(monthStart, { months: 1 });
+    setCurrentMonth(format(firstOfNextMonth, "MMM-yyyy"));
+  };
 
   return (
-    <div>
+    <div className={styles.CalendarWrapper}>
       <div className={styles.CalendarControls}>
-        <h2 className={styles.Month}>
-          {format(firstDayCurrentMonth, "MMMM yyyy")}
-        </h2>
+        <h2 className={styles.Month}>{format(monthStart, "MMMM yyyy")}</h2>
         <button
           type="button"
           onClick={previousMonth}
           className={styles.CalendarControlsButton}
         >
-          <span className={styles.SrHelper}>Previous month</span>
-          {"<"}
+          <span className={styles.ScreenReader}>Previous month</span>
+          <ChevronLeftIcon height={24} width={24} />
         </button>
         <button
           onClick={nextMonth}
           type="button"
           className={styles.CalendarControlsButton}
         >
-          <span className={styles.SrHelper}>Next month</span>
-          {">"}
+          <span className={styles.ScreenReader}>Next month</span>
+          <ChevronRightIcon height={24} width={24} />
         </button>
       </div>
       <div className={styles.CalendarGridHeader}>
@@ -82,18 +79,15 @@ const Calendar: React.FC<Props> = () => {
         <div>S</div>
       </div>
       <div className={styles.CalendarGrid}>
-        {days.map((day, dayIdx) => (
-          <div
-            key={day.toString()}
-            style={columnStart(day, dayIdx)}
-            className={styles.CalendarCell}
-          >
+        {days.map((day) => (
+          <div key={day.toString()} className={styles.CalendarCell}>
             <button
               type="button"
               onClick={() => setSelectedDay(day)}
               className={classNames(
-                isToday(day) && styles.Today,
+                isToday(day) && !isEqual(day, selectedDay) && styles.Today,
                 isEqual(day, selectedDay) && styles.Selected,
+                !isSameMonth(day, monthStart) && styles.AdjacentMonthDay,
                 styles.CalendarCellButton
               )}
             >

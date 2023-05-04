@@ -1,5 +1,11 @@
 @import "colors";
 
+.CalendarWrapper {
+  border: 1px solid $gray2;
+  width: 320px;
+  padding: 8px;
+}
+
 .CalendarGrid {
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr));
@@ -18,7 +24,7 @@
   grid-template-columns: repeat(7, minmax(0, 1fr));
 }
 
-.SrHelper {
+.ScreenReader {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -43,6 +49,7 @@
   margin: -6px 0;
   padding: 6px;
   color: #9ca3af;
+  cursor: pointer;
 
   &:hover {
     color: #6b7280;
@@ -53,6 +60,7 @@
   flex: 1 1 auto;
   color: $gray12;
   font-weight: 500;
+  font-size: 16px;
 }
 
 .CalendarCell {
@@ -67,16 +75,28 @@
   align-items: center;
   justify-content: center;
   border-radius: 999px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $gray2;
+  }
 }
 
 .Selected {
-  background-color: $red11;
+  background-color: $gray12;
   color: white;
   font-weight: 500;
+
+  &:hover {
+    background-color: $gray12;
+  }
 }
 
 .Today {
-  background-color: $gray3;
-  color: $gray12;
+  color: $red9;
   font-weight: 500;
+}
+
+.AdjacentMonthDay {
+  color: $gray8;
 }
