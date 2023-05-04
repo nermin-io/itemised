@@ -86,7 +86,10 @@ const Calendar: React.FC<Props> = () => {
               onClick={() => setSelectedDay(day)}
               className={classNames(
                 isToday(day) && !isEqual(day, selectedDay) && styles.Today,
-                isEqual(day, selectedDay) && styles.Selected,
+                isEqual(day, selectedDay) && !isToday(day) && styles.Selected,
+                isEqual(day, selectedDay) &&
+                  isToday(day) &&
+                  styles.SelectedToday,
                 !isSameMonth(day, monthStart) && styles.AdjacentMonthDay,
                 styles.CalendarCellButton
               )}

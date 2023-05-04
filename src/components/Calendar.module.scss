@@ -97,6 +97,16 @@
   font-weight: 500;
 }
 
+.SelectedToday {
+  background-color: $red9;
+  font-weight: 500;
+  color: white;
+
+  &:hover {
+    background-color: $red9;
+  }
+}
+
 .AdjacentMonthDay {
   color: $gray8;
 }
