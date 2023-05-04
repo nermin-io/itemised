@@ -51,7 +51,6 @@ const Calendar: React.FC<Props> = () => {
   return (
     <div className={styles.CalendarWrapper}>
       <div className={styles.CalendarControls}>
-        <h2 className={styles.Month}>{format(monthStart, "MMMM yyyy")}</h2>
         <button
           type="button"
           onClick={previousMonth}
@@ -60,6 +59,7 @@ const Calendar: React.FC<Props> = () => {
           <span className={styles.ScreenReader}>Previous month</span>
           <ChevronLeftIcon height={24} width={24} />
         </button>
+        <h2 className={styles.Month}>{format(monthStart, "MMMM yyyy")}</h2>
         <button
           onClick={nextMonth}
           type="button"
