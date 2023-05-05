@@ -1,7 +1,7 @@
-import Calendar from "@/components/Calendar";
 import Card from "@/components/Card";
+import DatePicker from "@/components/DatePicker";
 
-export default function CalendarDemo() {
+export default function DatePickerDemo() {
   return (
     <Card
       style={{
@@ -11,7 +11,7 @@ export default function CalendarDemo() {
         justifyContent: "center",
       }}
     >
-      <Calendar />
+      <DatePicker />
     </Card>
   );
 }

@@ -1,12 +1,12 @@
 @import "colors";
 
-.CalendarWrapper {
+.DatePickerWrapper {
   border: 1px solid $gray2;
   width: 320px;
   padding: 8px;
 }
 
-.CalendarGrid {
+.DatePickerGrid {
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr));
   margin-top: 8px;
@@ -14,7 +14,7 @@
   text-align: center;
 }
 
-.CalendarGridHeader {
+.DatePickerGridHeader {
   margin-top: 40px;
   font-size: 12px;
   text-align: center;
@@ -36,13 +36,13 @@
   border-width: 0;
 }
 
-.CalendarControls {
+.DatePickerControls {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.CalendarControlsButton {
+.DatePickerControlsButton {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -65,11 +65,11 @@
   text-align: center;
 }
 
-.CalendarCell {
+.DatePickerDayCell {
   padding: 6px 0;
 }
 
-.CalendarCellButton {
+.DatePickerCellButton {
   margin: 0 auto;
   height: 32px;
   width: 32px;

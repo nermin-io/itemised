@@ -12,7 +12,7 @@ import {
   startOfWeek,
 } from "date-fns";
 import React, { useEffect, useState } from "react";
-import styles from "./Calendar.module.scss";
+import styles from "./DatePicker.module.scss";
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 
 interface Props {}
@@ -21,7 +21,7 @@ function classNames(...classes: Array<string | boolean>) {
   return classes.filter(Boolean).join(" ");
 }
 
-const Calendar: React.FC<Props> = () => {
+const DatePicker: React.FC<Props> = () => {
   const today = startOfToday();
   const [selectedDay, setSelectedDay] = useState(today);
   const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
@@ -49,12 +49,12 @@ const Calendar: React.FC<Props> = () => {
   };
 
   return (
-    <div className={styles.CalendarWrapper}>
-      <div className={styles.CalendarControls}>
+    <div className={styles.DatePickerWrapper}>
+      <div className={styles.DatePickerControls}>
         <button
           type="button"
           onClick={previousMonth}
-          className={styles.CalendarControlsButton}
+          className={styles.DatePickerControlsButton}
         >
           <span className={styles.ScreenReader}>Previous month</span>
           <ChevronLeftIcon height={24} width={24} />
@@ -63,13 +63,13 @@ const Calendar: React.FC<Props> = () => {
         <button
           onClick={nextMonth}
           type="button"
-          className={styles.CalendarControlsButton}
+          className={styles.DatePickerControlsButton}
         >
           <span className={styles.ScreenReader}>Next month</span>
           <ChevronRightIcon height={24} width={24} />
         </button>
       </div>
-      <div className={styles.CalendarGridHeader}>
+      <div className={styles.DatePickerGridHeader}>
         <div>S</div>
         <div>M</div>
         <div>T</div>
@@ -78,9 +78,9 @@ const Calendar: React.FC<Props> = () => {
         <div>F</div>
         <div>S</div>
       </div>
-      <div className={styles.CalendarGrid}>
+      <div className={styles.DatePickerGrid}>
         {days.map((day) => (
-          <div key={day.toString()} className={styles.CalendarCell}>
+          <div key={day.toString()} className={styles.DatePickerDayCell}>
             <button
               type="button"
               onClick={() => setSelectedDay(day)}
@@ -91,7 +91,7 @@ const Calendar: React.FC<Props> = () => {
                   isToday(day) &&
                   styles.SelectedToday,
                 !isSameMonth(day, monthStart) && styles.AdjacentMonthDay,
-                styles.CalendarCellButton
+                styles.DatePickerCellButton
               )}
             >
               <time dateTime={format(day, "yyyy-MM-dd")}>
@@ -105,4 +105,4 @@ const Calendar: React.FC<Props> = () => {
   );
 };
 
-export default Calendar;
+export default DatePicker;
