@@ -2,6 +2,7 @@
 
 .DatePickerWrapper {
   border: 1px solid $gray2;
+  border-radius: 4px;
   width: 320px;
   padding: 8px;
 }
@@ -47,13 +48,15 @@
   align-items: center;
   justify-content: center;
   flex: none;
-  margin: -6px 0;
-  padding: 6px;
+  padding: 4px;
   color: #9ca3af;
   cursor: pointer;
+  border: 1px solid $gray3;
+  border-radius: 4px;
 
   &:hover {
     color: #6b7280;
+    background-color: $gray1;
   }
 }
 

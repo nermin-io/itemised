@@ -17,9 +17,9 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 
 interface Props {}
 
-function classNames(...classes: Array<string | boolean>) {
+const classNames = (...classes: Array<string | boolean>) => {
   return classes.filter(Boolean).join(" ");
-}
+};
 
 const DatePicker: React.FC<Props> = () => {
   const today = startOfToday();
@@ -57,7 +57,7 @@ const DatePicker: React.FC<Props> = () => {
           className={styles.DatePickerControlsButton}
         >
           <span className={styles.ScreenReader}>Previous month</span>
-          <ChevronLeftIcon height={24} width={24} />
+          <ChevronLeftIcon height={20} width={20} />
         </button>
         <h2 className={styles.Month}>{format(monthStart, "MMMM yyyy")}</h2>
         <button
@@ -66,17 +66,17 @@ const DatePicker: React.FC<Props> = () => {
           className={styles.DatePickerControlsButton}
         >
           <span className={styles.ScreenReader}>Next month</span>
-          <ChevronRightIcon height={24} width={24} />
+          <ChevronRightIcon height={20} width={20} />
         </button>
       </div>
       <div className={styles.DatePickerGridHeader}>
-        <div>S</div>
-        <div>M</div>
-        <div>T</div>
-        <div>W</div>
-        <div>T</div>
-        <div>F</div>
-        <div>S</div>
+        <span>S</span>
+        <span>M</span>
+        <span>T</span>
+        <span>W</span>
+        <span>T</span>
+        <span>F</span>
+        <span>S</span>
       </div>
       <div className={styles.DatePickerGrid}>
         {days.map((day) => (
