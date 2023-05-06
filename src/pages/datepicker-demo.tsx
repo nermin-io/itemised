@@ -4,7 +4,7 @@ import { add, format, startOfToday } from "date-fns";
 import { useState } from "react";
 
 export default function DatePickerDemo() {
-  const [date, setDate] = useState(add(startOfToday(), { days: 1 }));
+  const [date, setDate] = useState(add(startOfToday(), { months: 1 }));
   return (
     <Card
       style={{

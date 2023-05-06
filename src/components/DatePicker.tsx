@@ -2,11 +2,15 @@ import {
   add,
   eachDayOfInterval,
   endOfMonth,
+  endOfToday,
   endOfWeek,
   format,
+  getDay,
   isEqual,
   isSameMonth,
+  isSaturday,
   isToday,
+  isWeekend,
   parse,
   startOfToday,
   startOfWeek,
@@ -26,14 +30,28 @@ const classNames = (...classes: Array<string | boolean>) => {
 };
 
 const presetDates = (currentDate: Date) => {
+  const isDayWeekend = isWeekend(currentDate);
   return [
     {
       label: "Tomorrow",
       value: add(currentDate, { days: 1 }),
     },
     {
+      label: isDayWeekend ? "Next Weekend" : "This Weekend",
+      value: add(currentDate, {
+        days: isDayWeekend
+          ? isSaturday(currentDate)
+            ? 7
+            : 6
+          : 6 - getDay(currentDate),
+      }),
+    },
+    {
       label: "Next Week",
-      value: add(currentDate, { weeks: 1 }),
+      value: add(currentDate, {
+        weeks: 1,
+        days: isDayWeekend ? (isSaturday(currentDate) ? 2 : 1) : 0,
+      }),
     },
     {
       label: "Next Month",
@@ -43,8 +61,7 @@ const presetDates = (currentDate: Date) => {
 };
 
 const DatePicker: React.FC<Props> = ({ value, onChange }) => {
-  const today = startOfToday();
-  const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
+  const [currentMonth, setCurrentMonth] = useState(format(value, "MMM-yyyy"));
   const monthStart = parse(currentMonth, "MMM-yyyy", new Date());
 
   useEffect(() => {
