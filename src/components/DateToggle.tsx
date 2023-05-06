@@ -10,6 +10,7 @@ import {
   isTomorrow,
   isWeekend,
   isWithinInterval,
+  isYesterday,
   startOfToday,
 } from "date-fns";
 import { CalendarIcon } from "@radix-ui/react-icons";
@@ -44,8 +45,9 @@ const shouldDisplaySimpleDate = (date: Date) => {
 
 const humanFriendlyDate = (date: Date) => {
   if (isToday(date)) return "Today";
-  if (isPast(date)) return "Invallid Date";
+  if (isYesterday(date)) return "Yesterday";
   if (isTomorrow(date)) return "Tomorrow";
+  if (isPast(date)) return format(date, "EEE MMM e");
   if (shouldDisplaySimpleDate(date)) return format(date, "EEE");
   return format(date, "EEE MMM e");
 };

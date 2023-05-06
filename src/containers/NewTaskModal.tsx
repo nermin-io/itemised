@@ -32,6 +32,7 @@ const NewTaskModal: React.FC<Props> = ({ label = "Add Task" }) => {
   const clearFields = () => {
     setTitle("");
     setDescription("");
+    setDueDate(startOfToday());
   };
 
   const onCancelHandler = () => {

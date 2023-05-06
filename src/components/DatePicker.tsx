@@ -5,6 +5,7 @@ import {
   endOfWeek,
   format,
   getDay,
+  isBefore,
   isEqual,
   isSameMonth,
   isSaturday,
@@ -24,6 +25,7 @@ interface Props {
   value: Date;
   onChange: DatePickerOnChangeHandler;
   children: React.ReactNode | React.ReactNode[];
+  minDate?: Date;
 }
 
 const classNames = (...classes: Array<string | boolean>) => {
@@ -70,7 +72,12 @@ const presetDates = (currentDate: Date) => {
   ];
 };
 
-const DatePicker: React.FC<Props> = ({ value, onChange, children }) => {
+const DatePicker: React.FC<Props> = ({
+  value,
+  onChange,
+  children,
+  minDate = startOfToday(),
+}) => {
   const [currentMonth, setCurrentMonth] = useState(format(value, "MMM-yyyy"));
   const monthStart = parse(currentMonth, "MMM-yyyy", new Date());
   const [popoverOpen, setPopoverOpen] = useState(false);
@@ -167,6 +174,7 @@ const DatePicker: React.FC<Props> = ({ value, onChange, children }) => {
                     !isSameMonth(day, monthStart) && styles.AdjacentMonthDay,
                     styles.DatePickerCellButton
                   )}
+                  disabled={isBefore(day, minDate)}
                 >
                   <time dateTime={format(day, "yyyy-MM-dd")}>
                     {format(day, "d")}
