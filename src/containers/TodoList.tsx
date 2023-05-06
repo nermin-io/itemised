@@ -13,11 +13,12 @@ import Field from "@/components/Field";
 import Label from "@/components/Label";
 import useSettings from "@/hooks/settings";
 import EmptyState from "@/components/EmptyState";
+import DatePicker from "@/components/DatePicker";
 
 interface Props {}
 
 const TodoList: React.FC<Props> = () => {
-  const { todos } = useTodos();
+  const { todos, rescheduleMany } = useTodos();
   const { settings, setSetting } = useSettings();
   const outstandingTodos = todos.filter(
     (t) => settings.showCompleted || !t.completed
@@ -51,12 +52,28 @@ const TodoList: React.FC<Props> = () => {
           const date = parse(dateStr, "LLL d", new Date());
           const urgency = triage(date);
           const dueDays = getDueDays(date);
+          const items = groups[dateStr];
           return (
             <CardRowGroup key={dateStr} urgency={urgency}>
-              <p>
-                {dateStr} ({dueDays})
-              </p>
-              {groups[dateStr].map((item) => (
+              <div>
+                <p>
+                  {dateStr} ({dueDays})
+                </p>
+                {urgency === "high" && (
+                  <DatePicker
+                    value={date}
+                    onChange={(d) =>
+                      rescheduleMany(
+                        items.map((item) => item.key),
+                        d
+                      )
+                    }
+                  >
+                    <a>Reschedule</a>
+                  </DatePicker>
+                )}
+              </div>
+              {items.map((item) => (
                 <TodoItem key={item.key} item={item} />
               ))}
             </CardRowGroup>

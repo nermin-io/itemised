@@ -71,12 +71,28 @@ const TodoProvider: React.FC<Props> = ({ children }) => {
     setTodos(newTodos);
   };
 
+  const rescheduleMany = (keys: Array<string>, date: Date) => {
+    const newTodos = todos.map((todo) => {
+      if (keys.includes(todo.key)) {
+        return {
+          ...todo,
+          date: date,
+        };
+      }
+
+      return todo;
+    });
+
+    setTodos(newTodos);
+  };
+
   const context = {
     todos,
     clear,
     addItem,
     removeItem,
     updateItem,
+    rescheduleMany,
   };
 
   return (

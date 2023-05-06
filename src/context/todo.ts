@@ -14,6 +14,7 @@ export interface TodoContext {
   addItem: (item: TodoItem) => void;
   updateItem: (key: string, item: Omit<TodoItem, "key">) => void;
   removeItem: (key: string) => void;
+  rescheduleMany: (keys: Array<string>, date: Date) => void;
 }
 
 const defaultContextVal: TodoContext = {
@@ -22,6 +23,7 @@ const defaultContextVal: TodoContext = {
   addItem: () => {},
   removeItem: () => {},
   updateItem: () => {},
+  rescheduleMany: () => {},
 };
 
 const TodoContext = React.createContext<TodoContext>(defaultContextVal);
