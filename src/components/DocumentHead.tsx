@@ -38,7 +38,7 @@ const DocumentHead: React.FC<Props> = ({ title, description }) => {
       <meta property="og:image:height" content="630" />
       <meta property="og:image:alt" content="Itemised Logo" />
       <meta property="og:type" content="website" />
-      <meta property="og:url" content="https://itemised.co" />
+      <meta property="og:url" content="https://itemised.vercel.app" />
       <meta property="og:description" content={description} />
       <meta property="og:title" content={title} />
     </Head>
