@@ -1,12 +1,5 @@
 @import "colors";
 
-.DatePickerWrapper {
-  border: 1px solid $gray2;
-  border-radius: 4px;
-  width: 300px;
-  padding: 8px;
-}
-
 .DatePickerGrid {
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr));
@@ -146,4 +139,35 @@
 
 .AdjacentMonthDay {
   color: $gray8;
+}
+
+// Popover
+
+.DatePickerPopoverContent {
+  border-radius: 4px;
+  padding: 8px;
+  background-color: white;
+  width: 300px;
+  box-shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px,
+    hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
+  animation-duration: 400ms;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+
+  &:focus {
+    box-shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px,
+      hsl(206 22% 7% / 20%) 0px 10px 20px -15px, 0 0 0 2px $gray7;
+  }
+  &[data-state="open"][data-side="top"] {
+    animation-name: slideDownAndFade;
+  }
+  &[data-state="open"][data-side="right"] {
+    animation-name: slideLeftAndFade;
+  }
+  &[data-state="open"][data-side="bottom"] {
+    animation-name: slideUpAndFade;
+  }
+  &[data-state="open"][data-side="left"] {
+    animation-name: slideRightAndFade;
+  }
 }

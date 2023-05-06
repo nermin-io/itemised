@@ -1,6 +1,6 @@
 import Card from "@/components/Card";
 import DatePicker from "@/components/DatePicker";
-import { add, format, startOfToday } from "date-fns";
+import { add, startOfToday } from "date-fns";
 import { useState } from "react";
 
 export default function DatePickerDemo() {
@@ -14,8 +14,9 @@ export default function DatePickerDemo() {
         justifyContent: "center",
       }}
     >
-      <p>{format(date, "EEE MMM d")}</p>
-      <DatePicker value={date} onChange={(d) => setDate(d)} />
+      <DatePicker value={date} onChange={(d) => setDate(d)}>
+        <a>Reschedule</a>
+      </DatePicker>
     </Card>
   );
 }
