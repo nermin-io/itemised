@@ -8,6 +8,9 @@ import styles from "./NewTaskModal.module.scss";
 import useTodos from "@/hooks/todo";
 import { v4 as uuidv4 } from "uuid";
 import useSettings from "@/hooks/settings";
+import { startOfToday } from "date-fns";
+import DateToggle from "@/components/DateToggle";
+import DatePicker from "@/components/DatePicker";
 
 interface Props {
   label?: string;
@@ -16,6 +19,7 @@ interface Props {
 const NewTaskModal: React.FC<Props> = ({ label = "Add Task" }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [dueDate, setDueDate] = useState(startOfToday());
   const [isDisabled, setIsDisabled] = useState(true);
   const { addItem } = useTodos();
   const { settings, setSetting } = useSettings();
@@ -41,7 +45,7 @@ const NewTaskModal: React.FC<Props> = ({ label = "Add Task" }) => {
       title: title,
       description: description,
       completed: false,
-      date: new Date(),
+      date: dueDate,
     });
     clearFields();
   };
@@ -69,24 +73,29 @@ const NewTaskModal: React.FC<Props> = ({ label = "Add Task" }) => {
             variant="text"
           />
           <DialogFooter>
-            <Dialog.Close asChild>
-              <TriggerButton
-                size="small"
-                intent="secondary"
-                onClick={onCancelHandler}
-              >
-                Cancel
-              </TriggerButton>
-            </Dialog.Close>
-            <Dialog.Close asChild>
-              <TriggerButton
-                size="small"
-                onClick={onSaveHandler}
-                disabled={isDisabled}
-              >
-                Add Task
-              </TriggerButton>
-            </Dialog.Close>
+            <DatePicker value={dueDate} onChange={(date) => setDueDate(date)}>
+              <DateToggle size="small" date={dueDate} />
+            </DatePicker>
+            <div className={styles.FooterActions}>
+              <Dialog.Close asChild>
+                <TriggerButton
+                  size="small"
+                  intent="secondary"
+                  onClick={onCancelHandler}
+                >
+                  Cancel
+                </TriggerButton>
+              </Dialog.Close>
+              <Dialog.Close asChild>
+                <TriggerButton
+                  size="small"
+                  onClick={onSaveHandler}
+                  disabled={isDisabled}
+                >
+                  Add Task
+                </TriggerButton>
+              </Dialog.Close>
+            </div>
           </DialogFooter>
         </Dialog.Content>
       </Dialog.Portal>

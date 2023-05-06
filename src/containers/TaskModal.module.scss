@@ -55,3 +55,10 @@
     color: $gray9;
   }
 }
+
+.FooterActions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 24px;
+}

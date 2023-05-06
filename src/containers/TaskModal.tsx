@@ -8,6 +8,8 @@ import styles from "./TaskModal.module.scss";
 import useTodos from "@/hooks/todo";
 import { TodoItem } from "@/context/todo";
 import { truncate } from "lodash";
+import DatePicker from "@/components/DatePicker";
+import DateToggle from "@/components/DateToggle";
 
 interface Props {
   item: TodoItem;
@@ -16,6 +18,7 @@ interface Props {
 const TaskModal: React.FC<Props> = ({ item }) => {
   const [title, setTitle] = useState(item.title);
   const [description, setDescription] = useState(item.description);
+  const [dueDate, setDueDate] = useState(item.date);
   const [isDisabled, setIsDisabled] = useState(true);
   const { updateItem } = useTodos();
 
@@ -29,7 +32,7 @@ const TaskModal: React.FC<Props> = ({ item }) => {
       title: title,
       description: description,
       completed: item.completed,
-      date: item.date,
+      date: dueDate,
     });
   };
 
@@ -72,24 +75,29 @@ const TaskModal: React.FC<Props> = ({ item }) => {
             variant="text"
           />
           <DialogFooter>
-            <Dialog.Close asChild>
-              <TriggerButton
-                size="small"
-                intent="secondary"
-                onClick={onCancelHandler}
-              >
-                Cancel
-              </TriggerButton>
-            </Dialog.Close>
-            <Dialog.Close asChild>
-              <TriggerButton
-                size="small"
-                onClick={onSaveHandler}
-                disabled={isDisabled}
-              >
-                Save
-              </TriggerButton>
-            </Dialog.Close>
+            <DatePicker value={dueDate} onChange={(date) => setDueDate(date)}>
+              <DateToggle size="small" date={dueDate} />
+            </DatePicker>
+            <div className={styles.FooterActions}>
+              <Dialog.Close asChild>
+                <TriggerButton
+                  size="small"
+                  intent="secondary"
+                  onClick={onCancelHandler}
+                >
+                  Cancel
+                </TriggerButton>
+              </Dialog.Close>
+              <Dialog.Close asChild>
+                <TriggerButton
+                  size="small"
+                  onClick={onSaveHandler}
+                  disabled={isDisabled}
+                >
+                  Save
+                </TriggerButton>
+              </Dialog.Close>
+            </div>
           </DialogFooter>
         </Dialog.Content>
       </Dialog.Portal>
