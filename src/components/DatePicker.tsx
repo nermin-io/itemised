@@ -11,6 +11,7 @@ import {
   isToday,
   isWeekend,
   parse,
+  startOfToday,
   startOfWeek,
 } from "date-fns";
 import React, { useEffect, useState } from "react";
@@ -32,6 +33,11 @@ const classNames = (...classes: Array<string | boolean>) => {
 const presetDates = (currentDate: Date) => {
   const isDayWeekend = isWeekend(currentDate);
   return [
+    {
+      key: "today",
+      label: "Today",
+      value: startOfToday(),
+    },
     {
       key: "tomorrow",
       label: "Tomorrow",
@@ -67,6 +73,7 @@ const presetDates = (currentDate: Date) => {
 const DatePicker: React.FC<Props> = ({ value, onChange, children }) => {
   const [currentMonth, setCurrentMonth] = useState(format(value, "MMM-yyyy"));
   const monthStart = parse(currentMonth, "MMM-yyyy", new Date());
+  const [popoverOpen, setPopoverOpen] = useState(false);
 
   useEffect(() => {
     if (!isSameMonth(value, monthStart))
@@ -89,8 +96,16 @@ const DatePicker: React.FC<Props> = ({ value, onChange, children }) => {
     setCurrentMonth(format(firstOfNextMonth, "MMM-yyyy"));
   };
 
+  const setDate = (date: Date) => {
+    onChange(date);
+    setPopoverOpen(false);
+  };
+
   return (
-    <Popover.Root>
+    <Popover.Root
+      open={popoverOpen}
+      onOpenChange={(open) => setPopoverOpen(open)}
+    >
       <Popover.Trigger asChild>
         <div style={{ cursor: "pointer" }}>{children}</div>
       </Popover.Trigger>
@@ -104,7 +119,7 @@ const DatePicker: React.FC<Props> = ({ value, onChange, children }) => {
               <button
                 key={preset.key}
                 className={styles.PresetButton}
-                onClick={() => onChange(preset.value)}
+                onClick={() => setDate(preset.value)}
               >
                 {preset.label}
                 <span>{format(preset.value, "EEE MMM d")}</span>
@@ -144,7 +159,7 @@ const DatePicker: React.FC<Props> = ({ value, onChange, children }) => {
               <div key={day.toString()} className={styles.DatePickerDayCell}>
                 <button
                   type="button"
-                  onClick={() => onChange(day)}
+                  onClick={() => setDate(day)}
                   className={classNames(
                     isToday(day) && !isEqual(day, value) && styles.Today,
                     isEqual(day, value) && !isToday(day) && styles.Selected,
