@@ -21,6 +21,23 @@ const classNames = (...classes: Array<string | boolean>) => {
   return classes.filter(Boolean).join(" ");
 };
 
+const presetDates = (currentDate: Date) => {
+  return [
+    {
+      label: "Tomorrow",
+      value: add(currentDate, { days: 1 }),
+    },
+    {
+      label: "Next Week",
+      value: add(currentDate, { weeks: 1 }),
+    },
+    {
+      label: "Next Month",
+      value: add(currentDate, { months: 1 }),
+    },
+  ];
+};
+
 const DatePicker: React.FC<Props> = () => {
   const today = startOfToday();
   const [selectedDay, setSelectedDay] = useState(today);
@@ -50,6 +67,18 @@ const DatePicker: React.FC<Props> = () => {
 
   return (
     <div className={styles.DatePickerWrapper}>
+      <div className={styles.DatePresets}>
+        {presetDates(selectedDay).map((preset) => (
+          <button
+            key={preset.value.toString()}
+            className={styles.PresetButton}
+            onClick={() => setSelectedDay(preset.value)}
+          >
+            {preset.label}
+            <span>{format(preset.value, "EEE MMM d")}</span>
+          </button>
+        ))}
+      </div>
       <div className={styles.DatePickerControls}>
         <button
           type="button"
@@ -57,7 +86,7 @@ const DatePicker: React.FC<Props> = () => {
           className={styles.DatePickerControlsButton}
         >
           <span className={styles.ScreenReader}>Previous month</span>
-          <ChevronLeftIcon height={20} width={20} />
+          <ChevronLeftIcon height={18} width={18} />
         </button>
         <h2 className={styles.Month}>{format(monthStart, "MMMM yyyy")}</h2>
         <button
@@ -66,7 +95,7 @@ const DatePicker: React.FC<Props> = () => {
           className={styles.DatePickerControlsButton}
         >
           <span className={styles.ScreenReader}>Next month</span>
-          <ChevronRightIcon height={20} width={20} />
+          <ChevronRightIcon height={18} width={18} />
         </button>
       </div>
       <div className={styles.DatePickerGridHeader}>

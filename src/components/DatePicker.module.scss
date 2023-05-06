@@ -3,7 +3,7 @@
 .DatePickerWrapper {
   border: 1px solid $gray2;
   border-radius: 4px;
-  width: 320px;
+  width: 300px;
   padding: 8px;
 }
 
@@ -13,6 +13,38 @@
   margin-top: 8px;
   font-size: 14px;
   text-align: center;
+}
+
+.DatePresets {
+  display: flex;
+  flex-direction: column;
+
+  border-bottom: 1px solid $gray3;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+}
+
+.PresetButton {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 500;
+  color: $gray12;
+  padding: 8px 4px;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $gray2;
+  }
+
+  span {
+    font-size: 12px;
+    color: $gray8;
+    font-weight: 400;
+  }
 }
 
 .DatePickerGridHeader {
@@ -48,7 +80,7 @@
   align-items: center;
   justify-content: center;
   flex: none;
-  padding: 4px;
+  padding: 3px;
   color: #9ca3af;
   cursor: pointer;
   border: 1px solid $gray3;
@@ -64,7 +96,7 @@
   flex: 1 1 auto;
   color: $gray12;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 14px;
   text-align: center;
 }
 
