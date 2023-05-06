@@ -23,7 +23,7 @@
 }
 
 .highUrgency {
-  > div {
+  > div:first-of-type {
     p {
       color: $red9;
     }
@@ -31,7 +31,7 @@
 }
 
 .mediumUrgency {
-  > div {
+  > div:first-of-type {
     p {
       color: $blackA12;
     }
@@ -39,7 +39,7 @@
 }
 
 .lowUrgency {
-  > div {
+  > div:first-of-type {
     p {
       color: $green9;
     }
