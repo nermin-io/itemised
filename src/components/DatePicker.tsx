@@ -33,10 +33,12 @@ const presetDates = (currentDate: Date) => {
   const isDayWeekend = isWeekend(currentDate);
   return [
     {
+      key: "tomorrow",
       label: "Tomorrow",
       value: add(currentDate, { days: 1 }),
     },
     {
+      key: "weekend",
       label: isDayWeekend ? "Next Weekend" : "This Weekend",
       value: add(currentDate, {
         days: isDayWeekend
@@ -47,6 +49,7 @@ const presetDates = (currentDate: Date) => {
       }),
     },
     {
+      key: "next_week",
       label: "Next Week",
       value: add(currentDate, {
         weeks: 1,
@@ -54,6 +57,7 @@ const presetDates = (currentDate: Date) => {
       }),
     },
     {
+      key: "next_month",
       label: "Next Month",
       value: add(currentDate, { months: 1 }),
     },
@@ -90,7 +94,7 @@ const DatePicker: React.FC<Props> = ({ value, onChange }) => {
       <div className={styles.DatePresets}>
         {presetDates(value).map((preset) => (
           <button
-            key={preset.value.toString()}
+            key={preset.key}
             className={styles.PresetButton}
             onClick={() => onChange(preset.value)}
           >
