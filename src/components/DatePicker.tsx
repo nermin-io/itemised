@@ -15,7 +15,11 @@ import React, { useEffect, useState } from "react";
 import styles from "./DatePicker.module.scss";
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 
-interface Props {}
+export type DatePickerOnChangeHandler = (val: Date) => void;
+interface Props {
+  value: Date;
+  onChange: DatePickerOnChangeHandler;
+}
 
 const classNames = (...classes: Array<string | boolean>) => {
   return classes.filter(Boolean).join(" ");
@@ -38,17 +42,16 @@ const presetDates = (currentDate: Date) => {
   ];
 };
 
-const DatePicker: React.FC<Props> = () => {
+const DatePicker: React.FC<Props> = ({ value, onChange }) => {
   const today = startOfToday();
-  const [selectedDay, setSelectedDay] = useState(today);
   const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
   const monthStart = parse(currentMonth, "MMM-yyyy", new Date());
 
   useEffect(() => {
-    if (!isSameMonth(selectedDay, monthStart))
-      setCurrentMonth(format(selectedDay, "MMM-yyyy"));
+    if (!isSameMonth(value, monthStart))
+      setCurrentMonth(format(value, "MMM-yyyy"));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedDay]);
+  }, [value]);
 
   const days = eachDayOfInterval({
     start: startOfWeek(monthStart),
@@ -68,11 +71,11 @@ const DatePicker: React.FC<Props> = () => {
   return (
     <div className={styles.DatePickerWrapper}>
       <div className={styles.DatePresets}>
-        {presetDates(selectedDay).map((preset) => (
+        {presetDates(value).map((preset) => (
           <button
             key={preset.value.toString()}
             className={styles.PresetButton}
-            onClick={() => setSelectedDay(preset.value)}
+            onClick={() => onChange(preset.value)}
           >
             {preset.label}
             <span>{format(preset.value, "EEE MMM d")}</span>
@@ -112,13 +115,11 @@ const DatePicker: React.FC<Props> = () => {
           <div key={day.toString()} className={styles.DatePickerDayCell}>
             <button
               type="button"
-              onClick={() => setSelectedDay(day)}
+              onClick={() => onChange(day)}
               className={classNames(
-                isToday(day) && !isEqual(day, selectedDay) && styles.Today,
-                isEqual(day, selectedDay) && !isToday(day) && styles.Selected,
-                isEqual(day, selectedDay) &&
-                  isToday(day) &&
-                  styles.SelectedToday,
+                isToday(day) && !isEqual(day, value) && styles.Today,
+                isEqual(day, value) && !isToday(day) && styles.Selected,
+                isEqual(day, value) && isToday(day) && styles.SelectedToday,
                 !isSameMonth(day, monthStart) && styles.AdjacentMonthDay,
                 styles.DatePickerCellButton
               )}

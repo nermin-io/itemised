@@ -1,7 +1,10 @@
 import Card from "@/components/Card";
 import DatePicker from "@/components/DatePicker";
+import { add, format, startOfToday } from "date-fns";
+import { useState } from "react";
 
 export default function DatePickerDemo() {
+  const [date, setDate] = useState(add(startOfToday(), { days: 1 }));
   return (
     <Card
       style={{
@@ -11,7 +14,8 @@ export default function DatePickerDemo() {
         justifyContent: "center",
       }}
     >
-      <DatePicker />
+      <p>{format(date, "EEE MMM d")}</p>
+      <DatePicker value={date} onChange={(d) => setDate(d)} />
     </Card>
   );
 }
