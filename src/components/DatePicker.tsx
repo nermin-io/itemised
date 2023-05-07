@@ -38,7 +38,7 @@ const presetDates = (currentDate: Date) => {
     {
       key: "today",
       label: "Today",
-      value: startOfToday(),
+      value: currentDate,
     },
     {
       key: "tomorrow",
@@ -122,7 +122,7 @@ const DatePicker: React.FC<Props> = ({
           align="start"
         >
           <div className={styles.DatePresets}>
-            {presetDates(value).map((preset) => (
+            {presetDates(startOfToday()).map((preset) => (
               <button
                 key={preset.key}
                 className={styles.PresetButton}
