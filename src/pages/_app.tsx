@@ -3,7 +3,6 @@ import type { AppProps } from "next/app";
 import Layout from "@/components/Layout";
 import TodoProvider from "@/providers/TodoProvider";
 import SettingsProvider from "@/providers/SettingsProvider";
-import Head from "next/head";
 import DocumentHead from "@/components/DocumentHead";
 
 export default function App({ Component, pageProps }: AppProps) {

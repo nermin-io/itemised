@@ -58,6 +58,10 @@ const DocumentHead: React.FC<Props> = () => {
       <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#222222" />
       <meta name="msapplication-TileColor" content="#da532c" />
       <meta name="theme-color" content="#222222" />
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
     </Head>
   );
 };

@@ -1,5 +1,13 @@
+@import "breakpoints";
+
 .DialogFooter {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
+
+  @media screen and (max-width: $screen-sm) {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+  }
 }

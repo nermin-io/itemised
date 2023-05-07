@@ -60,20 +60,22 @@ const TaskModal: React.FC<Props> = ({ item }) => {
       <Dialog.Portal>
         <Dialog.Overlay className={styles.DialogOverlay} />
         <Dialog.Content className={styles.DialogContent}>
-          <Input
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="Todo Item"
-            variant="text"
-            intent="primary"
-          />
-          <Textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="Description..."
-            size="small"
-            variant="text"
-          />
+          <div className={styles.InputSection}>
+            <Input
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Todo Item"
+              variant="text"
+              intent="primary"
+            />
+            <Textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="Description..."
+              size="small"
+              variant="text"
+            />
+          </div>
           <DialogFooter>
             <DatePicker value={dueDate} onChange={(date) => setDueDate(date)}>
               <DateToggle size="small" date={dueDate} />
