@@ -12,6 +12,7 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
+import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 
 const group = cva(styles.base, {
   variants: {
@@ -48,7 +49,11 @@ const CardRowGroup: React.FC<Props> = ({ items, dateKey, className }) => {
   };
 
   return (
-    <DndContext collisionDetection={closestCenter} onDragEnd={handleReorder}>
+    <DndContext
+      collisionDetection={closestCenter}
+      onDragEnd={handleReorder}
+      modifiers={[restrictToVerticalAxis]}
+    >
       <div className={group({ urgency, className })}>
         <div>
           <p>
