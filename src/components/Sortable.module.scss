@@ -1,0 +1,9 @@
+@import "colors";
+
+.Sortable {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  background-color: white;
+  border-bottom: 1px dashed $gray6;
+}

@@ -7,6 +7,11 @@ import type { TodoItem as Todo } from "@/context/todo";
 import DatePicker from "./DatePicker";
 import TodoItem from "@/containers/TodoItem";
 import useTodos from "@/hooks/todo";
+import { closestCenter, DndContext } from "@dnd-kit/core";
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
 
 const group = cva(styles.base, {
   variants: {
@@ -34,29 +39,39 @@ const CardRowGroup: React.FC<Props> = ({ items, dateKey, className }) => {
   const urgency = triage(date);
   const dueDays = getDueDays(date);
   return (
-    <div className={group({ urgency, className })}>
-      <div>
-        <p>
-          {dateKey} ({dueDays})
-        </p>
-        {urgency === "high" && (
-          <DatePicker
-            value={date}
-            onChange={(d) =>
-              rescheduleMany(
-                items.map((item) => item.key),
-                d
-              )
-            }
-          >
-            <a>Reschedule</a>
-          </DatePicker>
-        )}
+    <DndContext
+      collisionDetection={closestCenter}
+      onDragEnd={(e) => console.log("dragEnd", e)}
+    >
+      <div className={group({ urgency, className })}>
+        <div>
+          <p>
+            {dateKey} ({dueDays})
+          </p>
+          {urgency === "high" && (
+            <DatePicker
+              value={date}
+              onChange={(d) =>
+                rescheduleMany(
+                  items.map((item) => item.key),
+                  d
+                )
+              }
+            >
+              <a>Reschedule</a>
+            </DatePicker>
+          )}
+        </div>
+        <SortableContext
+          items={items.map((i) => i.key)}
+          strategy={verticalListSortingStrategy}
+        >
+          {items.map((item) => (
+            <TodoItem key={item.key} item={item} />
+          ))}
+        </SortableContext>
       </div>
-      {items.map((item) => (
-        <TodoItem key={item.key} item={item} />
-      ))}
-    </div>
+    </DndContext>
   );
 };
 

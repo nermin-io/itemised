@@ -1,11 +1,12 @@
 @import "colors";
 
 .base {
+  background-color: white;
+  flex-grow: 1;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   justify-content: space-between;
-  border-bottom: 1px dashed $gray6;
   padding: 12px 0;
   gap: 8px;
 }

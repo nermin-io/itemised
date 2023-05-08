@@ -3,9 +3,12 @@ import CardRow from "@/components/CardRow";
 import Checkbox from "@/components/Checkbox";
 import { TodoItem } from "@/context/todo";
 import useTodos from "@/hooks/todo";
-import { TrashIcon } from "@radix-ui/react-icons";
+import { DragHandleDots2Icon, TrashIcon } from "@radix-ui/react-icons";
 import React from "react";
 import TaskModal from "./TaskModal";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+import Sortable from "@/components/Sortable";
 
 interface Props {
   item: TodoItem;
@@ -13,6 +16,19 @@ interface Props {
 
 const TodoItem: React.FC<Props> = ({ item }) => {
   const { updateItem, removeItem } = useTodos();
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    setActivatorNodeRef,
+  } = useSortable({ id: item.key });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
 
   const handleCompleteItem = () => {
     updateItem(item.key, {
@@ -28,13 +44,23 @@ const TodoItem: React.FC<Props> = ({ item }) => {
   };
 
   return (
-    <CardRow>
-      <Checkbox checked={item.completed} onCheckedChange={handleCompleteItem} />
-      <TaskModal item={item} />
-      <Button size="small" intent="media" onClick={handleDeleteItem}>
-        <TrashIcon color="#AAA" />
+    <Sortable innerRef={setNodeRef} style={style} {...attributes}>
+      <CardRow>
+        <Checkbox
+          checked={item.completed}
+          onCheckedChange={handleCompleteItem}
+        />
+        <TaskModal item={item} />
+      </CardRow>
+      <Button
+        size="small"
+        intent="media"
+        innerRef={setActivatorNodeRef}
+        {...listeners}
+      >
+        <DragHandleDots2Icon color="#AAA" />
       </Button>
-    </CardRow>
+    </Sortable>
   );
 };
 
