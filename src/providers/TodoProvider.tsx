@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import TodoContext, { TodoItem } from "@/context/todo";
 import { formatISO } from "date-fns";
+import { arrayMove } from "@dnd-kit/sortable";
 
 interface Props {
   children: React.ReactNode | React.ReactNode[];
@@ -56,6 +57,16 @@ const TodoProvider: React.FC<Props> = ({ children }) => {
     setTodos(filteredTodos);
   };
 
+  const reorderItems = (active: string, over: string) => {
+    setTodos((items) => {
+      const keys = items.map((t) => t.key);
+      const startIdx = keys.indexOf(active);
+      const endIdx = keys.indexOf(over);
+
+      return arrayMove(items, startIdx, endIdx);
+    });
+  };
+
   const updateItem = (key: string, newItem: Omit<TodoItem, "key">) => {
     const newTodos = todos.map((todo) => {
       if (todo.key === key) {
@@ -93,6 +104,7 @@ const TodoProvider: React.FC<Props> = ({ children }) => {
     removeItem,
     updateItem,
     rescheduleMany,
+    reorderItems,
   };
 
   return (

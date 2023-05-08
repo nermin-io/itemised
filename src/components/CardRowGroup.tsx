@@ -7,7 +7,7 @@ import type { TodoItem as Todo } from "@/context/todo";
 import DatePicker from "./DatePicker";
 import TodoItem from "@/containers/TodoItem";
 import useTodos from "@/hooks/todo";
-import { closestCenter, DndContext } from "@dnd-kit/core";
+import { closestCenter, DndContext, DragEndEvent } from "@dnd-kit/core";
 import {
   SortableContext,
   verticalListSortingStrategy,
@@ -34,15 +34,21 @@ interface Props
 }
 
 const CardRowGroup: React.FC<Props> = ({ items, dateKey, className }) => {
-  const { rescheduleMany } = useTodos();
+  const { rescheduleMany, reorderItems } = useTodos();
   const date = parse(dateKey, "LLL d", new Date());
   const urgency = triage(date);
   const dueDays = getDueDays(date);
+
+  const handleReorder = (e: DragEndEvent) => {
+    const activeId = e.active.id as string;
+    const overId = e.over?.id as string;
+    if (activeId !== overId) {
+      reorderItems(activeId, overId);
+    }
+  };
+
   return (
-    <DndContext
-      collisionDetection={closestCenter}
-      onDragEnd={(e) => console.log("dragEnd", e)}
-    >
+    <DndContext collisionDetection={closestCenter} onDragEnd={handleReorder}>
       <div className={group({ urgency, className })}>
         <div>
           <p>
