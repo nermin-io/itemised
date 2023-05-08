@@ -27,7 +27,18 @@ const TodoList: React.FC<Props> = () => {
   const groups = groupItemsByDate(outstandingTodos);
 
   const exportHandler = () => {
-    const contents = JSON.stringify(todos, serializer, 2);
+    const exportKey = Buffer.from(
+      JSON.stringify(todos, serializer, 2)
+    ).toString("base64");
+    const contents = JSON.stringify(
+      {
+        exported_at: new Date().toISOString(),
+        key: exportKey,
+        data: todos,
+      },
+      serializer,
+      2
+    );
     const filename = `itemised_export_${format(
       new Date(),
       "yyyyMMdd_HHmmss"
