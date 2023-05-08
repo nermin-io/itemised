@@ -46,3 +46,11 @@ export const getDueDays = (date: Date) => {
     return "Due Today";
   }
 };
+
+export const downloadFile = (blob: Blob, filename: string) => {
+  const link = document.createElement("a");
+  link.download = filename;
+  link.href = URL.createObjectURL(blob);
+  link.click();
+  URL.revokeObjectURL(link.href);
+};

@@ -3,7 +3,7 @@ import CardHeader from "@/components/CardHeader";
 import useTodos from "@/hooks/todo";
 import React from "react";
 import NewTaskModal from "./NewTaskModal";
-import { groupItemsByDate } from "@/helpers";
+import { downloadFile, groupItemsByDate } from "@/helpers";
 import CardRowGroup from "@/components/CardRowGroup";
 import Switch from "@/components/Switch";
 import CardSettings from "@/components/CardSettings";
@@ -11,6 +11,10 @@ import Field from "@/components/Field";
 import Label from "@/components/Label";
 import useSettings from "@/hooks/settings";
 import EmptyState from "@/components/EmptyState";
+import Button from "@/components/Button";
+import { DownloadIcon } from "@radix-ui/react-icons";
+import { serializer } from "@/providers/TodoProvider";
+import { format } from "date-fns";
 
 interface Props {}
 
@@ -21,6 +25,16 @@ const TodoList: React.FC<Props> = () => {
     (t) => settings.showCompleted || !t.completed
   );
   const groups = groupItemsByDate(outstandingTodos);
+
+  const exportHandler = () => {
+    const contents = JSON.stringify(todos, serializer, 2);
+    const filename = `itemised_export_${format(
+      new Date(),
+      "yyyyMMdd_HHmmss"
+    )}.json`;
+    const blob = new Blob([contents], { type: "application/json" });
+    downloadFile(blob, filename);
+  };
 
   return (
     <>
@@ -39,6 +53,11 @@ const TodoList: React.FC<Props> = () => {
               id="show-completed"
             />
             <Label htmlFor="show-completed">Show Completed</Label>
+          </Field>
+          <Field>
+            <Button onClick={exportHandler} size="small" intent="media">
+              <DownloadIcon /> Export
+            </Button>
           </Field>
         </CardSettings>
         {outstandingTodos.length === 0 && (

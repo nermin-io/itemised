@@ -7,7 +7,7 @@ interface Props {
   children: React.ReactNode | React.ReactNode[];
 }
 
-const deserializer = (key: string, value: any) => {
+export const deserializer = (key: string, value: any) => {
   const dateKeys = ["date"];
   if (dateKeys.includes(key)) {
     return new Date(value);
@@ -16,7 +16,7 @@ const deserializer = (key: string, value: any) => {
   return value;
 };
 
-const serializer = (key: string, value: any) => {
+export const serializer = (key: string, value: any) => {
   const dateKeys = ["date"];
   if (dateKeys.includes(key) && value instanceof Date) {
     return formatISO(value);

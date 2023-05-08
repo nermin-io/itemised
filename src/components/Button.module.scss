@@ -9,6 +9,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 6px;
 
   &:focus {
     outline: 2px solid black;
@@ -39,7 +40,7 @@
 }
 
 .minimal {
-  background-color: white;
+  background-color: transparent;
   border: 0;
 
   &:hover {
