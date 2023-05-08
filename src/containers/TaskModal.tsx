@@ -10,6 +10,7 @@ import { TodoItem } from "@/context/todo";
 import { truncate } from "lodash";
 import DatePicker from "@/components/DatePicker";
 import DateToggle from "@/components/DateToggle";
+import { TrashIcon } from "@radix-ui/react-icons";
 
 interface Props {
   item: TodoItem;
@@ -20,7 +21,7 @@ const TaskModal: React.FC<Props> = ({ item }) => {
   const [description, setDescription] = useState(item.description);
   const [dueDate, setDueDate] = useState(item.date);
   const [isDisabled, setIsDisabled] = useState(true);
-  const { updateItem } = useTodos();
+  const { updateItem, removeItem } = useTodos();
 
   useEffect(() => {
     if (title.length > 0) setIsDisabled(false);
@@ -81,6 +82,15 @@ const TaskModal: React.FC<Props> = ({ item }) => {
               <DateToggle size="small" date={dueDate} />
             </DatePicker>
             <div className={styles.FooterActions}>
+              <Dialog.Close asChild>
+                <TriggerButton
+                  size="small"
+                  intent="media"
+                  onClick={() => removeItem(item.key)}
+                >
+                  <TrashIcon color="#AAA" />
+                </TriggerButton>
+              </Dialog.Close>
               <Dialog.Close asChild>
                 <TriggerButton
                   size="small"
