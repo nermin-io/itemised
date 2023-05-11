@@ -1,0 +1,91 @@
+@import "colors";
+
+.base {
+
+  input[type="file"] {
+    visibility: hidden;
+    width: 0.1px;
+    height: 0.1px;
+    position: absolute;
+  }
+
+  label {
+    border: 0;
+    border-radius: 3px;
+    font-family: inherit;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+
+    &:focus {
+      outline: 2px solid black;
+      outline-offset: 2px;
+    }
+  }
+}
+
+.small {
+  label {
+    padding: 8px 10px;
+  }
+}
+
+.medium {
+  label {
+    padding: 10px 14px;
+  }
+}
+
+.large {
+  label {
+    padding: 12px 18px;
+  }
+}
+
+.primary {
+  label {
+    background-color: $gray12;
+    color: white;
+
+    &:disabled {
+      cursor: not-allowed;
+      background-color: $gray10;
+      color: $gray1;
+    }
+  }
+}
+
+.secondary {
+  label {
+    background-color: white;
+    border: 1px solid $gray7;
+    color: $gray11;
+
+    &:disabled {
+      cursor: not-allowed;
+      background-color: $gray7;
+    }
+  }
+}
+
+.minimal {
+  label {
+    background-color: transparent;
+    border: 0;
+
+    &:hover {
+      background-color: $gray3;
+    }
+
+    &:active {
+      background-color: $gray4;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+}

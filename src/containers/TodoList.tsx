@@ -15,8 +15,9 @@ import Button from "@/components/Button";
 import { DownloadIcon } from "@radix-ui/react-icons";
 import { serializer } from "@/providers/TodoProvider";
 import { format } from "date-fns";
+import FileInput from "@/components/FileInput";
 
-interface Props {}
+interface Props { }
 
 const TodoList: React.FC<Props> = () => {
   const { todos } = useTodos();
@@ -47,6 +48,11 @@ const TodoList: React.FC<Props> = () => {
     downloadFile(blob, filename);
   };
 
+  const importHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    console.log(files);
+  }
+
   return (
     <>
       <CardHeader>
@@ -65,11 +71,16 @@ const TodoList: React.FC<Props> = () => {
             />
             <Label htmlFor="show-completed">Show Completed</Label>
           </Field>
-          <Field>
-            <Button onClick={exportHandler} size="small" intent="media">
-              <DownloadIcon /> Export
-            </Button>
-          </Field>
+          <div style={{display: 'flex'}}>
+            <Field>
+              <FileInput size="small" onChange={importHandler}/>
+            </Field>
+            <Field>
+              <Button onClick={exportHandler} size="small" intent="media">
+                <DownloadIcon /> Export
+              </Button>
+            </Field>
+          </div>
         </CardSettings>
         {outstandingTodos.length === 0 && (
           <EmptyState newUser={settings.newUser} />
