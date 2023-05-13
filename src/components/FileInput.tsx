@@ -24,16 +24,16 @@ const classNames = cva(styles.base, {
 
 type InputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "size">;
 
-
 interface Props extends InputProps, VariantProps<typeof classNames> {
   label?: string;
+  innerRef?: React.ForwardedRef<HTMLInputElement>;
 }
 
-const FileInput: React.FC<Props> = ({ intent, size, label = "Import", className, ...props }) => {
+const FileInput: React.FC<Props> = ({ intent, size, innerRef, label = "Import", className, ...props }) => {
   return (
     <div className={classNames({ intent, size, className })}>
-      <input id="file" type="file" {...props} />
-      <label tabIndex="0" role="button" htmlFor="file">
+      <input id="file" type="file" ref={innerRef} {...props} />
+      <label tabIndex={0} role="button" htmlFor="file">
         <UploadIcon /> {label}
       </label>
     </div>

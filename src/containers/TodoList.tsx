@@ -16,6 +16,7 @@ import { DownloadIcon } from "@radix-ui/react-icons";
 import { serializer } from "@/providers/TodoProvider";
 import { format } from "date-fns";
 import FileInput from "@/components/FileInput";
+import FileImport from "./FileImport";
 
 interface Props { }
 
@@ -48,11 +49,6 @@ const TodoList: React.FC<Props> = () => {
     downloadFile(blob, filename);
   };
 
-  const importHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    console.log(files);
-  }
-
   return (
     <>
       <CardHeader>
@@ -71,10 +67,8 @@ const TodoList: React.FC<Props> = () => {
             />
             <Label htmlFor="show-completed">Show Completed</Label>
           </Field>
-          <div style={{display: 'flex'}}>
-            <Field>
-              <FileInput size="small" onChange={importHandler}/>
-            </Field>
+          <div style={{ display: 'flex' }}>
+            <FileImport />
             <Field>
               <Button onClick={exportHandler} size="small" intent="media">
                 <DownloadIcon /> Export
