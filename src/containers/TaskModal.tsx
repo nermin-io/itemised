@@ -60,7 +60,7 @@ const TaskModal: React.FC<Props> = ({ item }) => {
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className={styles.DialogOverlay} />
-        <Dialog.Content className={styles.DialogContent}>
+        <Dialog.Content className={styles.DialogContent} onOpenAutoFocus={e => e.preventDefault()}>
           <div className={styles.InputSection}>
             <Input
               value={title}
