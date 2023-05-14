@@ -50,13 +50,13 @@ const FileImport: React.FC<Props> = () => {
   const [open, setOpen] = useState(false);
   const [error, setError] = useState('');
   const [importOption, setImportOption] = useState(ImportBehaviour.Append);
-  const { todos, setTodos, addItem, updateItem } = useTodos();
+  const { todos, setTodos, addItem } = useTodos();
 
   const fileRef = useRef<HTMLInputElement>(null);
   const selectedFile = fileRef.current?.files?.item(0);
 
   const reset = () => {
-    if(fileRef.current) fileRef.current.value = "";
+    if (fileRef.current) fileRef.current.value = "";
     setError('');
     setOpen(false);
     setImportOption(ImportBehaviour.Append);
@@ -72,7 +72,12 @@ const FileImport: React.FC<Props> = () => {
   }
 
   const appendItems = (fileImport: any) => {
-    console.log('Append items');
+    const currentKeys = todos.map(t => t.key);
+    fileImport.data
+      // filter out items that are already present in the current list
+      .filter((item: any) => !currentKeys.includes(item.key))
+      .forEach((item: any) => addItem(item));
+    reset();
   }
 
   const replaceItems = (fileImport: any) => {
@@ -87,11 +92,11 @@ const FileImport: React.FC<Props> = () => {
         setError('The selected file is invalid.');
         return;
       }
-      switch(importOption) {
-        case ImportBehaviour.Append: 
+      switch (importOption) {
+        case ImportBehaviour.Append:
           appendItems(data);
           break;
-        case ImportBehaviour.ReplaceAll: 
+        case ImportBehaviour.ReplaceAll:
           replaceItems(data);
           break;
       }
