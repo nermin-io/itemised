@@ -6,36 +6,106 @@ import styles from "./FileImport.module.scss";
 import Field from "@/components/Field";
 import FileInput from "@/components/FileInput";
 import SelectDropdown from "@/components/SelectDropdown";
+import { isBoolean } from "lodash";
+import { isValid } from 'date-fns';
+import { deserializer, serializer } from "@/providers/TodoProvider";
+import useTodos from "@/hooks/todo";
 
 interface Props {
 }
 
-const IMPORT_OPTIONS = [
+enum ImportBehaviour {
+  ReplaceAll = 'replace',
+  Append = 'append',
+}
+
+const IMPORT_BEHAVIOUR_OPTIONS = [
   {
-    value: 'replace',
+    value: ImportBehaviour.ReplaceAll,
     label: 'Replace All',
   },
   {
-    value: 'append',
+    value: ImportBehaviour.Append,
     label: 'Append to List'
   }
-]
+];
+
+const isValidImportFile = (data: any) => {
+  const validProperties = data.key && data.data && data.data.every((item: any) => {
+    return item.key && item.title && item.description && isValid(item.date) && isBoolean(item.completed);
+  });
+
+  if (validProperties) {
+    const exportKey = Buffer.from(
+      JSON.stringify(data.data, serializer, 2)
+    ).toString("base64");
+
+    return exportKey === data.key;
+  }
+
+  return false;
+}
 
 const FileImport: React.FC<Props> = () => {
   const [open, setOpen] = useState(false);
-  const [importOption, setImportOption] = useState(IMPORT_OPTIONS[0].value);
+  const [error, setError] = useState('');
+  const [importOption, setImportOption] = useState(ImportBehaviour.Append);
+  const { todos, setTodos, addItem, updateItem } = useTodos();
 
   const fileRef = useRef<HTMLInputElement>(null);
   const selectedFile = fileRef.current?.files?.item(0);
 
+  const reset = () => {
+    if(fileRef.current) fileRef.current.value = "";
+    setError('');
+    setOpen(false);
+    setImportOption(ImportBehaviour.Append);
+  }
+
   const handleModalChange = (modalOpen: boolean) => {
-    if (fileRef.current) fileRef.current.value = "";
+    // reset file input when modal is closed
+    if (!modalOpen && fileRef.current) {
+      fileRef.current.value = "";
+      setError('');
+    }
     setOpen(modalOpen);
   }
 
-  const processFile = () => {
-    if (!fileRef.current) return;
-    console.log(fileRef.current.files);
+  const appendItems = (fileImport: any) => {
+    console.log('Append items');
+  }
+
+  const replaceItems = (fileImport: any) => {
+    setTodos([...fileImport.data]);
+    reset();
+  }
+
+  const processFile = (e: ProgressEvent<FileReader>) => {
+    try {
+      const data = JSON.parse(`${e.target?.result}`, deserializer);
+      if (!isValidImportFile(data)) {
+        setError('The selected file is invalid.');
+        return;
+      }
+      switch(importOption) {
+        case ImportBehaviour.Append: 
+          appendItems(data);
+          break;
+        case ImportBehaviour.ReplaceAll: 
+          replaceItems(data);
+          break;
+      }
+    } catch (e) {
+      setError('Corrupted File');
+    }
+  }
+
+  const handleImport = () => {
+    if (!selectedFile) return;
+    const reader = new FileReader();
+    reader.onload = processFile;
+
+    reader.readAsText(selectedFile);
   }
 
   return (
@@ -58,12 +128,13 @@ const FileImport: React.FC<Props> = () => {
             </div>
             <div className={styles.ImportBehaviour}>
               <p>Behaviour</p>
-              <SelectDropdown placeholder="Select import bevaviour" items={IMPORT_OPTIONS} value={importOption} onChange={setImportOption} />
+              <SelectDropdown placeholder="Select import bevaviour" items={IMPORT_BEHAVIOUR_OPTIONS} value={importOption} onChange={opt => setImportOption(opt as ImportBehaviour)} />
             </div>
           </div>
           <DialogFooter>
+            <p className={styles.ImportError}>{error}</p>
             <div className={styles.FooterActions}>
-              <TriggerButton size="small" intent="primary" onClick={processFile}>Import Data</TriggerButton>
+              <TriggerButton size="small" intent="primary" onClick={handleImport}>Import Data</TriggerButton>
               <Dialog.Close asChild>
                 <TriggerButton
                   size="small"

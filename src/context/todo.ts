@@ -10,6 +10,7 @@ export interface TodoItem {
 
 export interface TodoContext {
   todos: Array<TodoItem>;
+  setTodos: React.Dispatch<React.SetStateAction<TodoItem[]>>;
   clear: () => void;
   addItem: (item: TodoItem) => void;
   updateItem: (key: string, item: Omit<TodoItem, "key">) => void;
@@ -20,6 +21,7 @@ export interface TodoContext {
 
 const defaultContextVal: TodoContext = {
   todos: [],
+  setTodos: () => {},
   clear: () => {},
   addItem: () => {},
   removeItem: () => {},

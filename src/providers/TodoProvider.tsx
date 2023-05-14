@@ -99,6 +99,7 @@ const TodoProvider: React.FC<Props> = ({ children }) => {
 
   const context = {
     todos,
+    setTodos,
     clear,
     addItem,
     removeItem,
