@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import TodoContext, { TodoItem } from "@/context/todo";
-import { formatISO } from "date-fns";
+import { formatISO, isValid } from "date-fns";
 import { arrayMove } from "@dnd-kit/sortable";
+import { isBoolean } from "lodash";
 
 interface Props {
   children: React.ReactNode | React.ReactNode[];
@@ -29,7 +30,13 @@ const getInitialState = () => {
   if (typeof window === "undefined") return [];
 
   const todos = localStorage.getItem("todos");
-  return todos ? (JSON.parse(todos, deserializer) as Array<TodoItem>) : [];
+  try {
+    const parsedTodos = todos ? (JSON.parse(todos, deserializer) as Array<TodoItem>) : [];
+    const isValidObject = parsedTodos.every(todo => todo.key && todo.title && todo.description && isBoolean(todo.completed) && isValid(todo.date));
+    return isValidObject ? parsedTodos : [];
+  } catch (e) {
+    return [];
+  }
 };
 
 const TodoProvider: React.FC<Props> = ({ children }) => {
