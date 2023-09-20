@@ -7,33 +7,41 @@ import Field from "@/components/Field";
 import FileInput from "@/components/FileInput";
 import SelectDropdown from "@/components/SelectDropdown";
 import { isBoolean } from "lodash";
-import { isValid } from 'date-fns';
+import { isValid } from "date-fns";
 import { deserializer, serializer } from "@/providers/TodoProvider";
 import useTodos from "@/hooks/todo";
 
-interface Props {
-}
+interface Props {}
 
 enum ImportBehaviour {
-  ReplaceAll = 'replace',
-  Append = 'append',
+  ReplaceAll = "replace",
+  Append = "append",
 }
 
 const IMPORT_BEHAVIOUR_OPTIONS = [
   {
     value: ImportBehaviour.ReplaceAll,
-    label: 'Replace All',
+    label: "Replace All",
   },
   {
     value: ImportBehaviour.Append,
-    label: 'Append to List'
-  }
+    label: "Append to List",
+  },
 ];
 
 const isValidImportFile = (data: any) => {
-  const validProperties = data.key && data.data && data.data.every((item: any) => {
-    return item.key && item.title && item.description && isValid(item.date) && isBoolean(item.completed);
-  });
+  const validProperties =
+    data.key &&
+    data.data &&
+    data.data.every((item: any) => {
+      return (
+        item.key &&
+        item.title &&
+        item.description &&
+        isValid(item.date) &&
+        isBoolean(item.completed)
+      );
+    });
 
   if (validProperties) {
     const exportKey = Buffer.from(
@@ -44,11 +52,11 @@ const isValidImportFile = (data: any) => {
   }
 
   return false;
-}
+};
 
 const FileImport: React.FC<Props> = () => {
   const [open, setOpen] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [importOption, setImportOption] = useState(ImportBehaviour.Append);
   const { todos, setTodos, addItem } = useTodos();
 
@@ -57,39 +65,39 @@ const FileImport: React.FC<Props> = () => {
 
   const reset = () => {
     if (fileRef.current) fileRef.current.value = "";
-    setError('');
+    setError("");
     setOpen(false);
     setImportOption(ImportBehaviour.Append);
-  }
+  };
 
   const handleModalChange = (modalOpen: boolean) => {
     // reset file input when modal is closed
     if (!modalOpen && fileRef.current) {
       fileRef.current.value = "";
-      setError('');
+      setError("");
     }
     setOpen(modalOpen);
-  }
+  };
 
   const appendItems = (fileImport: any) => {
-    const currentKeys = todos.map(t => t.key);
+    const currentKeys = todos.map((t) => t.key);
     fileImport.data
       // filter out items that are already present in the current list
       .filter((item: any) => !currentKeys.includes(item.key))
       .forEach((item: any) => addItem(item));
     reset();
-  }
+  };
 
   const replaceItems = (fileImport: any) => {
     setTodos([...fileImport.data]);
     reset();
-  }
+  };
 
   const processFile = (e: ProgressEvent<FileReader>) => {
     try {
       const data = JSON.parse(`${e.target?.result}`, deserializer);
       if (!isValidImportFile(data)) {
-        setError('The selected file is invalid.');
+        setError("The selected file is invalid.");
         return;
       }
       switch (importOption) {
@@ -101,9 +109,9 @@ const FileImport: React.FC<Props> = () => {
           break;
       }
     } catch (e) {
-      setError('Corrupted File');
+      setError("Corrupted File");
     }
-  }
+  };
 
   const handleImport = () => {
     if (!selectedFile) return;
@@ -111,14 +119,20 @@ const FileImport: React.FC<Props> = () => {
     reader.onload = processFile;
 
     reader.readAsText(selectedFile);
-  }
+  };
 
   return (
     <Dialog.Root open={open} onOpenChange={handleModalChange}>
       <Dialog.Trigger asChild>
         <div>
           <Field>
-            <FileInput innerRef={fileRef} intent="media" size="small" accept="application/json" onChange={() => setOpen(true)} />
+            <FileInput
+              innerRef={fileRef}
+              intent="media"
+              size="small"
+              accept="application/json"
+              onChange={() => setOpen(true)}
+            />
           </Field>
         </div>
       </Dialog.Trigger>
@@ -133,18 +147,26 @@ const FileImport: React.FC<Props> = () => {
             </div>
             <div className={styles.ImportBehaviour}>
               <p>Behaviour</p>
-              <SelectDropdown placeholder="Select import bevaviour" items={IMPORT_BEHAVIOUR_OPTIONS} value={importOption} onChange={opt => setImportOption(opt as ImportBehaviour)} />
+              <SelectDropdown
+                placeholder="Select import bevaviour"
+                items={IMPORT_BEHAVIOUR_OPTIONS}
+                value={importOption}
+                onChange={(opt) => setImportOption(opt as ImportBehaviour)}
+              />
             </div>
           </div>
           <DialogFooter>
             <p className={styles.ImportError}>{error}</p>
             <div className={styles.FooterActions}>
-              <TriggerButton size="small" intent="primary" onClick={handleImport}>Import Data</TriggerButton>
+              <TriggerButton
+                size="small"
+                intent="primary"
+                onClick={handleImport}
+              >
+                Import Data
+              </TriggerButton>
               <Dialog.Close asChild>
-                <TriggerButton
-                  size="small"
-                  intent="secondary"
-                >
+                <TriggerButton size="small" intent="secondary">
                   Cancel
                 </TriggerButton>
               </Dialog.Close>

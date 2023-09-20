@@ -1,7 +1,7 @@
-import React from 'react';
-import { cva, type VariantProps } from 'class-variance-authority';
-import styles from './FileInput.module.scss';
-import { UploadIcon } from '@radix-ui/react-icons';
+import React from "react";
+import { cva, type VariantProps } from "class-variance-authority";
+import styles from "./FileInput.module.scss";
+import { UploadIcon } from "@radix-ui/react-icons";
 
 const classNames = cva(styles.base, {
   variants: {
@@ -13,23 +13,33 @@ const classNames = cva(styles.base, {
     intent: {
       primary: styles.primary,
       secondary: styles.secondary,
-      media: styles.media
+      media: styles.media,
     },
   },
   defaultVariants: {
-    size: 'medium',
-    intent: 'media'
-  }
+    size: "medium",
+    intent: "media",
+  },
 });
 
-type InputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "size">;
+type InputProps = Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  "type" | "size"
+>;
 
 interface Props extends InputProps, VariantProps<typeof classNames> {
   label?: string;
   innerRef?: React.ForwardedRef<HTMLInputElement>;
 }
 
-const FileInput: React.FC<Props> = ({ intent, size, innerRef, label = "Import", className, ...props }) => {
+const FileInput: React.FC<Props> = ({
+  intent,
+  size,
+  innerRef,
+  label = "Import",
+  className,
+  ...props
+}) => {
   return (
     <div className={classNames({ intent, size, className })}>
       <input id="file" type="file" ref={innerRef} {...props} />
@@ -38,6 +48,6 @@ const FileInput: React.FC<Props> = ({ intent, size, innerRef, label = "Import", 
       </label>
     </div>
   );
-}
+};
 
 export default FileInput;

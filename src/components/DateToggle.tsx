@@ -39,7 +39,8 @@ const shouldDisplaySimpleDate = (date: Date) => {
       start: today,
       end: add(today, { days: daysInFuture }),
     })
-  ) return true;
+  )
+    return true;
 
   return false;
 };

@@ -18,7 +18,7 @@ import { format } from "date-fns";
 import FileInput from "@/components/FileInput";
 import FileImport from "./FileImport";
 
-interface Props { }
+interface Props {}
 
 const TodoList: React.FC<Props> = () => {
   const { todos } = useTodos();
@@ -67,7 +67,7 @@ const TodoList: React.FC<Props> = () => {
             />
             <Label htmlFor="show-completed">Show Completed</Label>
           </Field>
-          <div style={{ display: 'flex' }}>
+          <div style={{ display: "flex" }}>
             <FileImport />
             <Field>
               <Button onClick={exportHandler} size="small" intent="media">

@@ -1,12 +1,16 @@
-import React from 'react';
-import * as Select from '@radix-ui/react-select';
-import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons';
-import styles from './SelectDropdown.module.scss';
+import React from "react";
+import * as Select from "@radix-ui/react-select";
+import {
+  CheckIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
+} from "@radix-ui/react-icons";
+import styles from "./SelectDropdown.module.scss";
 
 export type SelectItemValue = {
   value: string;
   label: string;
-}
+};
 export type SelectOnChangeHandler = (val: string) => void;
 
 interface Props {
@@ -17,7 +21,13 @@ interface Props {
   onChange: SelectOnChangeHandler;
 }
 
-const SelectDropdown: React.FC<Props> = ({ value, onChange, items, placeholder = "Select an item", ariaLabel = "Select Dropdown" }) => (
+const SelectDropdown: React.FC<Props> = ({
+  value,
+  onChange,
+  items,
+  placeholder = "Select an item",
+  ariaLabel = "Select Dropdown",
+}) => (
   <Select.Root value={value} onValueChange={onChange}>
     <Select.Trigger className={styles.SelectTrigger} aria-label={ariaLabel}>
       <Select.Value placeholder={placeholder} />
@@ -31,8 +41,12 @@ const SelectDropdown: React.FC<Props> = ({ value, onChange, items, placeholder =
           <ChevronUpIcon />
         </Select.ScrollUpButton>
         <Select.Viewport className={styles.SelectViewport}>
-          { items.map(item => (
-            <Select.Item key={item.value} value={item.value} className={styles.SelectItem}>
+          {items.map((item) => (
+            <Select.Item
+              key={item.value}
+              value={item.value}
+              className={styles.SelectItem}
+            >
               <Select.ItemText>{item.label}</Select.ItemText>
               <Select.ItemIndicator className={styles.SelectItemIndicator}>
                 <CheckIcon />
